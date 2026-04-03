@@ -1,0 +1,672 @@
+
+{% extends 'portals/base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'portals/sidebarVet.html' %}
+<main class="page-content">
+<div class="container-fluid">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+   
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#pablo">
+                  <i class="now-ui-icons media-2_sound-wave"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Stats</span>
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="now-ui-icons location_world"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Some Actions</span>
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Account Management</a>
+                  <a class="dropdown-item" href="#">Profile picture</a>
+                  <a class="dropdown-item" href="#">Change Password</a>
+                  <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#pablo">
+                  <i class="now-ui-icons users_single-02"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Account</span>
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="panel-header panel-header-lg">
+        <canvas id="bigDashboardChart"></canvas>
+      </div>
+      <div class="content">
+        <div class="row">
+<div class="col-md-12">
+<div class="card">
+<div class="card-header">
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Livestock Registration Form</h2>
+
+    <form enctype="multipart/form-data" id="LiveAdd" class="card p-4 shadow-lg rounded">
+        {% csrf_token %}
+
+        <input type="hidden" id="id"  name="id" >
+        <!-- Row 1 -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Livestock Type</label>
+          <select name="livestock_type" class="form-control" required>
+            <option value="">Select...</option>
+            <option value="dairy_cow">Dairy Cow</option>
+            <option value="beef">Beef</option>
+            <option value="sheep">Sheep</option>
+            <option value="goat">Goat</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Date of Registration</label>
+          <input type="date" name="date_of_registration" class="form-control" required>
+        </div>
+      </div>
+  
+      <!-- Row 2 -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Breed</label>
+          <input type="text" name="breed" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Sex</label>
+          <select name="sex" class="form-control" required>
+            <option value="">Select...</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+      </div>
+  
+      <!-- Row 3 -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Age</label>
+          <input type="number" name="age" class="form-control" placeholder="Age in months/years" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Body Weight (KG)</label>
+          <input type="number" step="0.01" name="body_weight" class="form-control" required>
+        </div>
+      </div>
+  
+      <!-- Row 4 -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Colour</label>
+          <input type="text" name="colour" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Number of Births</label>
+          <input type="number" name="number_of_births" class="form-control" value="0">
+        </div>
+      </div>
+  
+      <!-- Row 5 -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Given Name</label>
+          <input type="text" name="given_name" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Registration Number</label>
+          <input type="text" name="registration_number" class="form-control" required>
+        </div>
+      </div>
+  
+      <!-- Row 6 -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Breeding Level</label>
+          <input type="text" name="breeding_level" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Dam Details</label>
+          <input type="text" name="dam_details" class="form-control">
+        </div>
+      </div>
+  
+      <!-- Row 7 -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Sire Details</label>
+          <input type="text" name="sire_details" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Origin</label>
+          <select name="origin" class="form-control" required>
+            <option value="">Select...</option>
+            <option value="kenya">Kenya</option>
+            <option value="imported">Imported</option>
+          </select>
+        </div>
+      </div>
+  
+      <!-- Row 8 -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Country of Importation</label>
+          <input type="text" name="country_of_importation" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Source</label>
+          <select name="source" class="form-control" required>
+            <option value="">Select...</option>
+            <option value="farm">Farm</option>
+            <option value="market">Market</option>
+          </select>
+        </div>
+      </div>
+  
+      <!-- Row 9 -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Farm Name</label>
+          <input type="text" name="farm_name" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Owner Name</label>
+          <input type="text" name="owner_name" class="form-control" required>
+        </div>
+      </div>
+  
+      <!-- Row 10 -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Owner Phone</label>
+          <input type="text" name="owner_phone" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Owner ID Number</label>
+          <input type="text" name="owner_id_number" class="form-control" required>
+        </div>
+      </div>
+  
+      <!-- Row 11 -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">County</label>
+          <input type="text" name="county" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Sub County</label>
+          <input type="text" name="sub_county" class="form-control" required>
+        </div>
+      </div>
+  
+      <!-- Row 12 -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Village</label>
+          <input type="text" name="village" class="form-control" required>
+        </div>
+       
+  
+      <!-- Row 13 -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Practitioner Name</label>
+          <input type="text" name="practitioner_name" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Practitioner Reg No</label>
+          <input type="text" name="reg_number" class="form-control" required>
+        </div>
+      </div>
+  
+      <!-- Row 14 -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Contact</label>
+          <input type="text" name="contact" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Signature and Stamp</label>
+          <input type="text" name="signature_and_stamp" class="form-control">
+        </div>
+      </div>
+  
+      <!-- Row 15 -->
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <label class="form-label">Photo</label>
+          <input type="file" name="photo" class="form-control">
+        </div>
+      </div>
+  
+      <!-- Submit button -->
+      <div class="row">
+        <div class="col-md-6 mx-auto d-flex align-items-end">
+          <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </div>
+      </div>
+    </form>
+</div>
+
+    <!-- form modal end -->
+    <!--edit Modal  -->
+     <!-- form modal -->
+     <div class="modal fade" id="RequestEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Record</h5>
+            <button type="button" id="cancel" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="RequestEditForm" >
+              {% csrf_token %}
+              <input type="hidden" id="id"  name="id" >
+              
+            <div class="modal-footer">
+                <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="submit" id="submit" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- edit modal end -->
+    
+    <!-- Display Modal  Modal -->
+    <div class="modal fade" id="dsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" id="invoice">
+         <h2 class="text-center text-uppercase">{{ request.user.business_name }}</h2>
+          <h4 class="text-center text-uppercase">Name:{{ request.user.first_name }}</h4>
+          <h4 class="text-center text-uppercase">Contact:{{ request.user.phone_number }}</h4>
+          <h4 class="text-center text-uppercase">KVB No{{ request.user.registration_number }}</h4>
+          
+          <h3 class="text-center">Requests  Records </h3> 
+          <div class="modal-body" id="modalBody">
+          </div>
+          <div class="modal-footer" id="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closeModalBtn1">Close</button>
+            <button type="button" id="download" class="btn btn-primary">Download Pdf</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /. Display  modal -->
+<!-- sucess Modal -->
+    <style>
+      /* .select,
+      #locale {
+        width: 100%;
+      }
+      .like {
+        margin-right: 10px;
+      }
+      .mytable th{
+        font-size: 6px;
+
+      } */
+    </style>
+     <!-- Placeholder for the modal -->
+
+   
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        font-size: medium;
+      }
+      </style>
+      <div class="select" hidden>
+        <select class="form-control" id="locale">
+          <option value="en-" selected>en-US</option>
+        </select>
+      </div>
+      
+    
+<script>
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+
+     
+$('#LiveAdd').submit(function(e) {
+  e.preventDefault(); // Prevent the default form submission
+
+  // Create a FormData object
+  var formData = new FormData(this);
+
+  // Debugging: Check if file is added
+  console.log("Submitting form with data:", formData);
+
+  $.ajax({
+      type: 'POST',
+      url: "/api/livestock/create/",
+      data: formData,
+      processData: false, // Prevent jQuery from processing data
+      contentType: false, // Prevent jQuery from setting content type
+      success: function(data) {
+          $('#statusSuccessModal').modal('show');
+
+          setTimeout(function() {
+              window.location.reload(); // Reload the page
+          }, 1000);
+
+          console.log('Form submitted successfully:', data);
+      },
+      error: function(xhr, textStatus, errorThrown) {
+          console.error('Error submitting form:', errorThrown);
+          console.log('Response:', xhr.responseText);
+          alert(xhr.responseText);
+      }
+  });
+});
+
+
+     
+       $table.bootstrapTable('destroy').bootstrapTable({
+      height: 550,
+      locale: $('#locale').val(),
+      columns: [
+        [
+          {
+            field: 'state',
+            checkbox: true,
+            rowspan: 2,
+            align: 'center',
+            valign: 'middle'
+          },
+          {
+            field: 'assigned_to',
+            title: 'Vet Username',
+            sortable: true,
+            align: 'center'
+          },
+         
+          {
+            field: 'date_of_request',
+            title: 'Date of Request',
+            sortable: true,
+            align: 'center',
+            formatter: function (value, row) {
+              return moment(value).format('DD-MM-YYYY');
+            }
+          },
+          {
+            field: 'time_of_request',
+            title: 'Time Of Request',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'telemedicine_category',
+            title: 'Category',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'communication_methods',
+            title: 'Communication Method',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'request_type',
+            title: 'Request Type',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'emergency_condition',
+            title: 'Emergency Condition',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'non_emergency_condition',
+            title: 'Non Emergency Condition',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'case_history',
+            title: 'Case History',
+            sortable: true,
+            align: 'center'
+          },
+          
+          {
+            field: 'livestock_category',
+            title: 'Livestock Category',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'other_livestock_category',
+            title: 'Other Livestock Category',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'consultation_fee',
+            title: 'Consultation Fee',
+            sortable: true,
+            align: 'center',
+            formatter: function (value) {
+              return `Ksh ${parseFloat(value).toFixed(2)}`;
+            }
+          },
+          {
+            field: 'photo',
+            title: 'Photo',
+            align: 'center',
+            formatter: function (value) {
+                if (value) {
+                    return `
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#photoModal" 
+                           data-src="${value}">
+                            <img src="${value}" alt="Photo" width="50" height="50" class="img-thumbnail">
+                        </a>
+                    `;
+                }
+                return 'No Image';
+            }
+        }
+        ,
+          {
+            field: 'consent_display',
+            title: 'Consent Given',
+            sortable: true,
+            align: 'center'
+            
+          },
+          {
+            field: 'status', // Ensure this matches the field name in API
+            title: 'Status',
+            sortable: true,
+            align: 'center',
+            formatter: function (value, row, index) {
+                console.log("Row Data:", row); // Debugging
+        
+                // Check if status exists in the row object
+                if (!value) {
+                    return `<button class="btn btn-secondary btn-sm" disabled>Unknown</button>`;
+                }
+        
+                let statusClass = "btn-warning"; // Default to "Pending"
+        
+                if (value === "Accepted") {
+                    statusClass = "btn-success";
+                } else if (value === "Declined") {
+                    statusClass = "btn-danger";
+                }
+        
+                return `<button class="btn ${statusClass} btn-sm" disabled>${value}</button>`;
+            }
+        }
+,        
+          {
+            field: 'operate',
+            title: 'Item Operate',
+            align: 'center',
+            clickToSelect: false,
+            events: window.operateEvents,
+            formatter: operateFormatter
+          }
+        ],
+        [
+        ]
+        ]
+    })
+    $table.on('check.bs.table uncheck.bs.table ' +
+      'check-all.bs.table uncheck-all.bs.table',
+    function () {
+      $remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+      // save your data, here just save the current page
+      selections = getIdSelections()
+      // push or splice the selections if you want to save all data selections
+    })
+    $table.on('all.bs.table', function (e, name, args) {
+      
+    })
+    $remove.click(function () {
+      var ids = getIdSelections()
+      $table.bootstrapTable('remove', {
+        field: 'id',
+        values: ids
+      })
+      $remove.prop('disabled', true)
+    })
+  
+
+  $(function() {
+    initTable()
+
+    $('#locale').change(initTable)
+  })
+    </script>
+  
+  <script>
+    window.onload = function () {
+        document.getElementById("download")
+            .addEventListener("click", () => {
+                const invoice = document.getElementById("invoice");
+                console.log(invoice);
+                console.log(window);
+                var opt = {
+                    margin: 1,
+                    filename: 'farmer records.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+              
+                document.getElementById("modal-footer").style.display = "none";
+                //document.getElementById("closeModalBtn").style.display = "none";
+
+                html2pdf().from(invoice).set(opt).save().then(() => {
+                    
+                    window.location.reload();
+                });
+                
+                
+                document.getElementById("modal-footer").style.display = "none";
+            });
+    } 
+</script>
+
+
+    
+<!-- Placeholder for the modal -->  
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.28.0/tableExport.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table-locale-all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/extensions/export/bootstrap-table-export.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+
+  <script src="{% static 'portals/assets/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'portals/assets/js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'portals/assets/js/main.js' %}"></script>
+  <script src="{% static 'portals/assets/js/scripts.js' %}"></script>
+  <script src="{% static 'portals/assets/js/modal.js' %}"></script>
+  
+  
+  <!--  Notifications Plugin    -->
+  
+
+<!-- start of template -->
+</div>
+<!-- /.row (main row) -->
+</div><!-- /.container-fluid -->
+<!-- end  of template -->
+             
+      <footer class="footer">
+        <div class=" container-fluid ">
+            <div class="copyright">
+              &copy; Copyright <strong><span>SoinVet</span></strong>. All Rights Reserved
+              <div class="credits">
+              
+            </div>
+          </div>
+        </footer><!-- End Footer -->
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </main>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

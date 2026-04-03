@@ -1,0 +1,9 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools %}
+<div>
+    <a href="schedule/" class="button" style="padding:8px 12px;">➕ Schedule Zoom Meeting</a>
+</div>
+<br>
+{{ block.super }}
+{% endblock %}

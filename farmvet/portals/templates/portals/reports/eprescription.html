@@ -1,0 +1,1215 @@
+
+{% extends 'portals/base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'portals/sidebarVet.html' %}
+<main class="page-content">
+<div class="container-fluid">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+   
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#pablo">
+                  <i class="now-ui-icons media-2_sound-wave"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Stats</span>
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="now-ui-icons location_world"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Some Actions</span>
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Account Management</a>
+                  <a class="dropdown-item" href="#">Profile picture</a>
+                  <a class="dropdown-item" href="#">Change Password</a>
+                  <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#pablo">
+                  <i class="now-ui-icons users_single-02"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Account</span>
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="panel-header panel-header-lg">
+        <canvas id="bigDashboardChart"></canvas>
+      </div>
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+<h4 class="">E-Prescriptions Records</h4>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="px-5 my-1 text-center">
+    </div>
+   
+   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AiAddModal">
+    Add Record
+    </button>
+     <!-- form modal -->
+     <div class="modal fade" id="AiAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add</h5>
+            <button type="button" class="close" id="canceless" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="AiAddForm"  enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" id="id"  name="id" >
+              <div class="mb-3">
+                <label class="form-label">Pharmacy Name</label>
+                <input type="text" class="form-control" name="pharmacy_name">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-control" name="location">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Vet Practitioner Incharge</label>
+                <input type="text" class="form-control" name="vet_practitioner_incharge">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">K.V.B No</label>
+                <input type="text" class="form-control" name="kvb_no">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Licence No</label>
+                <input type="text" class="form-control" name="licence_no">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Contact</label>
+                <input type="text" class="form-control" name="contact">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Sign</label>
+                <input type="text" class="form-control" name="sign">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Signed On</label>
+                <input type="date" class="form-control" name="signed_on">
+              </div>
+            
+              <!-- Prescription Info -->
+              <div class="mb-3">
+                <label class="form-label">Drug Category</label>
+                <select class="form-control" name="drug_category">
+                  <option value="">Select Category</option>
+                  <option value="I">I</option>
+                  <option value="II">II</option>
+                  <option value="III">III</option>
+                  <option value="IV">IV</option>
+                </select>
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Prescription Target</label>
+                <select class="form-control" name="prescription_target">
+                  <option value="">Select Target</option>
+                  <option value="vet practitioner">Vet Practitioner</option>
+                  <option value="farmer">Farmer</option>
+                </select>
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Date of Prescription</label>
+                <input type="date" class="form-control" name="date_of_prescription">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Livestock Type</label>
+                <select class="form-control" name="livestock_type">
+                  <option value="">Select Type</option>
+                  <option value="dairy cow">Dairy Cow</option>
+                  <option value="beef">Beef</option>
+                  <option value="sheep">Sheep</option>
+                  <option value="goat">Goat</option>
+                </select>
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Breed</label>
+                <input type="text" class="form-control" name="breed">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Age</label>
+                <input type="text" class="form-control" name="age" placeholder="e.g., 2 years, 8 months">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Drug Trade Name</label>
+                <input type="text" class="form-control" name="drug_trade_name">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Manufacturing Company</label>
+                <input type="text" class="form-control" name="manufacturing_company">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Batch Number</label>
+                <input type="text" class="form-control" name="batch_number">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Drug Dosage</label>
+                <input type="text" class="form-control" name="drug_dosage" placeholder="e.g., 10 mg/kg BID">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Route of Administration</label>
+                <input type="text" class="form-control" name="route_of_administration" placeholder="e.g., IM, IV, PO">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Drug Volume</label>
+                <input type="text" class="form-control" name="drug_volume" placeholder="e.g., 10 ml, 1 vial">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Clinical Use</label>
+                <input type="text" class="form-control" name="clinical_use">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Duration of Treatment</label>
+                <input type="text" class="form-control" name="duration_of_treatment">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Withdrawal Period</label>
+                <input type="text" class="form-control" name="withdrawal_period">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Quantity Purchased</label>
+                <input type="text" class="form-control" name="quantity_purchased">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Storage Condition</label>
+                <input type="text" class="form-control" name="storage_condition">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Side Effect</label>
+                <input type="text" class="form-control" name="side_effect">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Expiry Date</label>
+                <input type="date" class="form-control" name="expiry_date">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Vet’s Comments</label>
+                <textarea class="form-control" name="vets_comments"></textarea>
+              </div>
+            
+              <!-- Buyer Info -->
+              <div class="mb-3">
+                <label class="form-label">Buyer Name</label>
+                <input type="text" class="form-control" name="buyer_name">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Buyer Category</label>
+                <select class="form-control" name="buyer_category">
+                  <option value="">Select Category</option>
+                  <option value="vet practitioner">Vet Practitioner</option>
+                  <option value="farmer">Farmer</option>
+                </select>
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Buyer K.V.B No</label>
+                <input type="text" class="form-control" name="buyer_kvb_no">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Buyer Licence No</label>
+                <input type="text" class="form-control" name="buyer_licence_no">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Buyer Signature</label>
+                <input type="text" class="form-control" name="buyer_signature">
+              </div>
+            
+            <div class="modal-footer">
+                <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="submit" id="submit" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- form modal end -->
+    <!--edit Modal  -->
+     <!-- form modal -->
+     <div class="modal fade" id="AiEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Record</h5>
+            <button type="button" id="cancel" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          <form id="AiEditForm" class="form-group"  enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" id="id" name="id">
+            <div class="mb-3">
+                <label class="form-label">Pharmacy Name</label>
+                <input type="text" class="form-control" name="pharmacy_name">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-control" name="location">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Vet Practitioner Incharge</label>
+                <input type="text" class="form-control" name="vet_practitioner_incharge">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">K.V.B No</label>
+                <input type="text" class="form-control" name="kvb_no">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Licence No</label>
+                <input type="text" class="form-control" name="licence_no">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Contact</label>
+                <input type="text" class="form-control" name="contact">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Sign</label>
+                <input type="text" class="form-control" name="sign">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Signed On</label>
+                <input type="date" class="form-control" name="signed_on">
+              </div>
+            
+              <!-- Prescription Info -->
+              <div class="mb-3">
+                <label class="form-label">Drug Category</label>
+                <select class="form-control" name="drug_category">
+                  <option value="">Select Category</option>
+                  <option value="I">I</option>
+                  <option value="II">II</option>
+                  <option value="III">III</option>
+                  <option value="IV">IV</option>
+                </select>
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Prescription Target</label>
+                <select class="form-control" name="prescription_target">
+                  <option value="">Select Target</option>
+                  <option value="vet_practitioner">Vet Practitioner</option>
+                  <option value="farmer">Farmer</option>
+                </select>
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Date of Prescription</label>
+                <input type="date" class="form-control" name="date_of_prescription">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Livestock Type</label>
+                <select class="form-control" name="livestock_type">
+                  <option value="">Select Type</option>
+                  <option value="dairy cow">Dairy Cow</option>
+                  <option value="beef">Beef</option>
+                  <option value="sheep">Sheep</option>
+                  <option value="goat">Goat</option>
+                </select>
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Breed</label>
+                <input type="text" class="form-control" name="breed">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Age</label>
+                <input type="text" class="form-control" name="age" placeholder="e.g., 2 years, 8 months">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Drug Trade Name</label>
+                <input type="text" class="form-control" name="drug_trade_name">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Manufacturing Company</label>
+                <input type="text" class="form-control" name="manufacturing_company">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Batch Number</label>
+                <input type="text" class="form-control" name="batch_number">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Drug Dosage</label>
+                <input type="text" class="form-control" name="drug_dosage" placeholder="e.g., 10 mg/kg BID">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Route of Administration</label>
+                <input type="text" class="form-control" name="route_of_administration" placeholder="e.g., IM, IV, PO">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Drug Volume</label>
+                <input type="text" class="form-control" name="drug_volume" placeholder="e.g., 10 ml, 1 vial">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Clinical Use</label>
+                <input type="text" class="form-control" name="clinical_use">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Duration of Treatment</label>
+                <input type="text" class="form-control" name="duration_of_treatment">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Withdrawal Period</label>
+                <input type="text" class="form-control" name="withdrawal_period">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Quantity Purchased</label>
+                <input type="text" class="form-control" name="quantity_purchased">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Storage Condition</label>
+                <input type="text" class="form-control" name="storage_condition">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Side Effect</label>
+                <input type="text" class="form-control" name="side_effect">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Expiry Date</label>
+                <input type="date" class="form-control" name="expiry_date">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Vet’s Comments</label>
+                <textarea class="form-control" name="vets_comments"></textarea>
+              </div>
+            
+              <!-- Buyer Info -->
+              <div class="mb-3">
+                <label class="form-label">Buyer Name</label>
+                <input type="text" class="form-control" name="buyer_name">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Buyer Category</label>
+                <select class="form-control" name="buyer_category">
+                  <option value="">Select Category</option>
+                  <option value="vet practitioner">Vet Practitioner</option>
+                  <option value="farmer">Farmer</option>
+                </select>
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Buyer K.V.B No</label>
+                <input type="text" class="form-control" name="buyer_kvb_no">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Buyer Licence No</label>
+                <input type="text" class="form-control" name="buyer_licence_no">
+              </div>
+            
+              <div class="mb-3">
+                <label class="form-label">Buyer Signature</label>
+                <input type="text" class="form-control" name="buyer_signature">
+              </div>
+            
+          <div class="modal-footer">
+              <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="" id="submitAi" class="btn btn-primary">Save</button>
+          </div>
+          
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- edit modal end -->
+    
+    <!-- Display Modal  Modal -->
+    <div class="modal fade" id="dsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" id="invoice">
+         <h2 class="text-center text-uppercase">{{ request.user.business_name }}</h2>
+          <h4 class="text-center text-uppercase">Name:{{ request.user.first_name }}</h4>
+          <h4 class="text-center text-uppercase">Contact:{{ request.user.phone_number }}</h4>
+          <h4 class="text-center text-uppercase">KVB No{{ request.user.registration_number }}</h4>
+          
+          <h3 class="text-center">E-Prescriptions Records </h3>
+          <div class="modal-body" id="modalBody">
+          </div>
+          <div class="modal-footer" id="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closeModalBtn1">Close</button>
+            <button type="button" id="download" class="btn btn-primary">Download Pdf</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /. Display  modal -->
+<!-- sucess Modal -->
+
+
+
+    
+    <style>
+      /* .select,
+      #locale {
+        width: 100%;
+      }
+      .like {
+        margin-right: 10px;
+      }
+      .mytable th{
+        font-size: 6px;
+
+      } */
+    </style>
+     <!-- Placeholder for the modal -->
+
+    <div id="toolbar">
+      <h5 class="text-danger">Click the plus sign To view More</h5>
+    </div>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        font-size: medium;
+        width: 100%;
+        
+      }
+      </style>
+      <div class="select" hidden>
+        <select class="form-control" id="locale">
+          <option value="en-" selected>en-US</option>
+        </select>
+      </div>
+      
+    <table
+      id="table"
+      class="table"
+      data-search="false"
+      data-show-refresh="true"
+      data-show-toggle="true"   
+      data-show-fullscreen="true"
+      data-show-columns="true"
+      data-show-columns-toggle-all="true"
+      data-detail-view="true"
+      data-show-export="false"
+      data-click-to-select="true"
+      data-detail-formatter="detailFormatter"
+      data-minimum-count-columns="1"
+      data-show-pagination-switch="true"
+      data-pagination="true"
+      data-id-field="id"
+      data-page-list="[10, 25, 50, 100, all]"
+      data-show-footer="true"
+      data-side-pagination="server"
+      data-url="{% url 'eprescription_list' %}"
+      data-response-handler="responseHandler">
+    </table>
+    <script>
+
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+
+      var $table = $('#table')
+      var $remove = $('#remove')
+      var selections = []
+    
+      function getIdSelections() {
+        return $.map($table.bootstrapTable('getSelections'), function (row) {
+          return row.id
+        })
+      }
+    
+      function responseHandler(res) {
+        return {
+                total: res.count,
+                rows: res.results
+            };
+      }
+      function detailFormatter(index, row) {
+    var html = '<table class="table">';
+    var columns = $('#table').bootstrapTable('getOptions').columns[0]; 
+    
+    // Create table rows
+    $.each(columns, function (index, column) {
+        if (column.field !== 'state' && column.field !== 'operate') {
+            html += '<tr>';
+            html += '<td><b>' + column.title + '</b></td>'; 
+            var key = column.field;
+            var value = row[key];
+            
+            // Check if the value is a valid date and format it
+            if (moment(value, moment.ISO_8601, true).isValid()) {
+                value = moment(value).format('DD-MM-YYYY');
+            }
+
+            html += '<td>' + value + '</td>'; 
+            html += '</tr>';
+        }
+    });
+
+    html += '</table>';
+    
+
+    
+    
+   
+    $('#modalBody').html(html);
+    
+    
+    $('#dsModal').modal('show');
+
+    
+    $('#closeModalBtn').on('click', function() {
+        $('#dsModal').modal('hide');
+    });
+    $('#closeModalBtn1').on('click', function() {
+        $('#dsModal').modal('hide');
+    });
+}
+$('#AiAddForm').submit(function(e) {
+  e.preventDefault();
+  var formData = new FormData(this);
+  var jsonObject = {};
+  formData.forEach(function(value, key) {
+      jsonObject[key] = value;
+  });
+
+  console.log(jsonObject);
+
+  var csrftoken = getCookie('csrftoken');
+  $.ajax({
+    method: 'POST',
+    url: "/e-prescriptions/create/",
+    data: JSON.stringify(jsonObject),
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader('X-CSRFToken', csrftoken);
+      xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+    }
+  }).done(function(data) {
+    console.log('POST response data:', data);
+    $('#AiAddModal').modal('hide');
+    $('#statusSuccessModal').modal('show');
+    setTimeout(function() {
+      window.location.reload();
+    }, 500);
+  }).fail(function(xhr, textStatus, errorThrown) {
+    $('#AiAddModal').modal('hide');
+
+    let errorMessage = 'An unexpected error occurred.';
+    let errorHtml = '';
+
+    if (xhr.status === 400) {
+      try {
+        var errors = JSON.parse(xhr.responseText);
+
+        if (typeof errors === 'object') {
+          // Handle field-specific errors
+          errorHtml += '<ul>';
+          $.each(errors, function(field, messages) {
+            if (Array.isArray(messages)) {
+              errorHtml += '<li><strong>' + field + ':</strong> ' + messages.join(', ') + '</li>';
+              // Highlight the field with error
+              var fieldSelector = `[name="${field}"]`;
+              $(fieldSelector).addClass('is-invalid'); // Bootstrap error style
+            }
+          });
+          errorHtml += '</ul>';
+        } else {
+          errorHtml = '<p>' + errors.message + '</p>';
+        }
+      } catch (e) {
+        errorHtml = '<p>' + xhr.responseText + '</p>';
+      }
+    } else {
+      errorHtml = '<p>' + (xhr.responseText || errorThrown || errorMessage) + '</p>';
+    }
+
+    console.error('Error submitting form:', errorHtml);
+    $('#errorModalBody').html(errorHtml);
+    $('#statusErrorsModal').modal('show');
+
+    // Remove error highlighting on input focus
+    $('input, select, textarea').on('focus', function() {
+      $(this).removeClass('is-invalid');
+    });
+
+  });
+
+  $('#errorButton').click(function() {
+    $('#statusErrorsModal').modal('hide');
+  });
+});
+
+function operateFormatter(value, row, index) {
+  return [
+     '<div class="btn-group" role="group" aria-label="Actions">',
+          '<a class="btn btn-warning btn-sm edit" id="edit" href="javascript:void(0)" title="Edit">',
+              '<i class="fa fa-edit"></i> Edit',
+          '</a>',
+          '<a class="btn btn-danger btn-sm remove" href="javascript:void(0)" title="Remove">',
+              '<i class="fa fa-trash"></i> Delete',
+          '</a>',
+      '</div>'
+  ].join('');
+}
+
+     
+      window.operateEvents = {
+        'click .edit': function(e, value, row, index) {
+    // Fetch the ID from the row data (assuming 'id' is a property in your data)
+    const objectId = row.id;
+    console.log(objectId)
+
+    // Check if ID is available before proceeding
+    if (!objectId) {
+      console.error('Error: Missing ID in row data');
+      return;
+    }
+
+    $('#AiEditModal').modal('show');
+
+    // Populate form fields after the modal is shown (ensures elements exist)
+    $('#AiEditModal').on('shown.bs.modal', function () {
+    const formFields = $('#AiEditModal .editable-field');
+
+    formFields.each(function (i, field) {
+        const fieldName = $(field).attr('name');
+        const fieldValue = row[fieldName]; // Assuming `row` contains the current data.
+
+        if ($(field).is('select')) {
+            // For dropdowns, ensure the correct value is selected
+            $(field).val(fieldValue || '').change();
+        } else {
+            // For other input fields
+            $(field).val(fieldValue || '');
+        }
+    });
+});
+
+// Close modal on cancel buttons
+$('#cancel, #canceless').on('click', function () {
+    $('#AiEditModal').modal('hide');
+});
+
+// Handle form submission
+$('#submitAi').on('click', function (e) {
+    e.preventDefault(); // Prevent the default form submission behavior
+
+    const formFields = $('#AiEditModal .editable-field');
+
+    // Update the `row` object with the form field values
+    formFields.each(function (i, field) {
+        const fieldName = $(field).attr('name');
+        const fieldValue = $(field).val();
+        row[fieldName] = fieldValue; // Assuming `row` is defined in the scope
+    });
+
+    // Send the data to the server using fetch API
+    fetch(`/e-prescriptions/update/${row.id}/`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken, // Ensure `csrftoken` is defined
+        },
+        body: JSON.stringify(row),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+
+            // Show the success modal
+            $('#AiEditModal').modal('hide');
+            $('#statusSuccessModal').modal('show');
+
+            // Reload the page after the success modal is shown
+            $('#statusSuccessModal').on('shown.bs.modal', function () {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000); // 1 second delay
+            });
+        })
+        .catch(error => console.error('Error:', error));
+});
+        },
+    'click .remove': function (e, value, row, index) {
+    // Show confirmation dialog
+    const confirmation = window.confirm("Are you sure you want to delete this record?");
+    
+    // If the user confirms, proceed with the deletion
+    if (confirmation) {
+        // Send an AJAX request to the Django backend to delete the record
+        $.ajax({
+            url: `/e-prescriptions/delete/${row.id}/`, // Replace with the appropriate URL
+            type: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            }, // Include CSRF token if required
+            success: function () {
+                // If deletion is successful, remove the row from the Bootstrap Table
+                $table.bootstrapTable('remove', {
+                    row: 'id',
+                    values: [row.id]
+                });
+                window.location.reload(); // Optionally reload the page after removal
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                // Handle errors, if any
+                console.error('Error deleting record:', errorThrown);
+                // Optionally, you can display error messages or handle UI updates here
+            }
+        });
+    } else {
+        // If the user cancels the action, do nothing (optional: add a cancel log message)
+        console.log('Deletion canceled');
+    }
+  }
+}
+      function totalTextFormatter(data) {
+        return 'Total'
+      }
+    
+      function totalNameFormatter(data) {
+        return data.length
+      }
+    
+      function totalPriceFormatter(data) {
+        var field = this.field
+        return '$' + data.map(function (row) {
+          return +row[field].substring(1)
+        }).reduce(function (sum, i) {
+          return sum + i
+        }, 0)
+      }
+      
+    
+      function initTable() {
+      // Process the fetched data and initialize Bootstrap Table
+    $table.bootstrapTable('destroy').bootstrapTable({
+      height: 550,
+      resizable: true,
+      locale: $('#locale').val(),
+      columns: [
+        [
+          
+        {
+            field: 'state',
+            checkbox: true,
+            rowspan: 2,
+            align: 'center',
+            valign: 'middle'
+          },
+          {
+            field: 'pharmacy_name',
+            title: 'Pharmacy Name',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'location',
+            title: 'Location',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'vet_practitioner_incharge',
+            title: 'Vet Practitioner Incharge',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'kvb_no',
+            title: 'KVB No',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'licence_no',
+            title: 'Licence No',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'contact',
+            title: 'Contact',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'sign',
+            title: 'Sign',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'signed_on',
+            title: 'Signed On',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'drug_category',
+            title: 'Drug Category',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'prescription_target',
+            title: 'Prescription Target',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'date_of_prescription',
+            title: 'Date of Prescription',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'livestock_type',
+            title: 'Livestock Type',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'breed',
+            title: 'Breed',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'age',
+            title: 'Age',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'drug_trade_name',
+            title: 'Drug Trade Name',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'manufacturing_company',
+            title: 'Manufacturing Company',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'batch_number',
+            title: 'Batch Number',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'drug_dosage',
+            title: 'Drug Dosage',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'route_of_administration',
+            title: 'Route of Administration',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'drug_volume',
+            title: 'Drug Volume',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'clinical_use',
+            title: 'Clinical Use',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'duration_of_treatment',
+            title: 'Duration of Treatment',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'withdrawal_period',
+            title: 'Withdrawal Period',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'quantity_purchased',
+            title: 'Quantity Purchased',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'storage_condition',
+            title: 'Storage Condition',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'side_effect',
+            title: 'Side Effect',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'expiry_date',
+            title: 'Expiry Date',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'vets_comments',
+            title: 'Vet\'s Comments',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'buyer_name',
+            title: 'Buyer Name',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'buyer_category',
+            title: 'Buyer Category',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'buyer_kvb_no',
+            title: 'Buyer KVB No',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'buyer_licence_no',
+            title: 'Buyer Licence No',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'buyer_signature',
+            title: 'Buyer Signature',
+            sortable: true,
+            align: 'center'
+          },
+          {
+            field: 'operate',
+            title: 'Item Operate',
+            align: 'center',
+            clickToSelect: false,
+            events: window.operateEvents,
+            formatter: operateFormatter
+          }
+        ],
+        [
+        ]
+        ]
+    })
+    $table.on('check.bs.table uncheck.bs.table ' +
+      'check-all.bs.table uncheck-all.bs.table',
+    function () {
+      $remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+      // save your data, here just save the current page
+      selections = getIdSelections()
+      // push or splice the selections if you want to save all data selections
+    })
+    $table.on('all.bs.table', function (e, name, args) {
+      
+    })
+    $remove.click(function () {
+      var ids = getIdSelections()
+      $table.bootstrapTable('remove', {
+        field: 'id',
+        values: ids
+      })
+      $remove.prop('disabled', true)
+    })
+  }
+
+  $(function() {
+    initTable()
+
+    $('#locale').change(initTable)
+  })
+    </script>
+  
+  <script>
+    window.onload = function () {
+      document.getElementById("download")
+          .addEventListener("click", () => {
+              const invoice = document.getElementById("invoice");
+              console.log(invoice);
+              console.log(window);
+              var opt = {
+                  margin: 1,
+                  filename: 'farmer records.pdf',
+                  image: { type: 'jpeg', quality: 0.98 },
+                  html2canvas: { scale: 2 },
+                  jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+              };
+            
+              document.getElementById("modal-footer").style.display = "none";
+              //document.getElementById("closeModalBtn").style.display = "none";
+
+              html2pdf().from(invoice).set(opt).save().then(() => {
+                  
+                  window.location.reload();
+              });
+              
+              
+              document.getElementById("modal-footer").style.display = "none";
+          });
+  }
+  
+</script>
+
+
+    
+<!-- Placeholder for the modal -->  
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.28.0/tableExport.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table-locale-all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/extensions/export/bootstrap-table-export.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+
+  <script src="{% static 'portals/assets/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'portals/assets/js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'portals/assets/js/main.js' %}"></script>
+  <script src="{% static 'portals/assets/js/scripts.js' %}"></script>
+  
+  
+  <!--  Notifications Plugin    -->
+  
+
+<!-- start of template -->
+</div>
+<!-- /.row (main row) -->
+</div><!-- /.container-fluid -->
+<!-- end  of template -->
+             
+      <footer class="footer">
+        <div class=" container-fluid ">
+            <div class="copyright">
+              &copy; Copyright <strong><span>SoinVet</span></strong>. All Rights Reserved
+              <div class="credits">
+              
+            </div>
+          </div>
+        </footer><!-- End Footer -->
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </main>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

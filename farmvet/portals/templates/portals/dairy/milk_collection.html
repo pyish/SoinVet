@@ -1,0 +1,721 @@
+
+{% extends 'portals/base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'portals/sidebarCoop.html' %}
+<main class="page-content">
+<div class="container-fluid">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+   
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#pablo">
+                  <i class="now-ui-icons media-2_sound-wave"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Stats</span>
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="now-ui-icons location_world"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Some Actions</span>
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Account Management</a>
+                  <a class="dropdown-item" href="#">Profile picture</a>
+                  <a class="dropdown-item" href="#">Change Password</a>
+                  <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#pablo">
+                  <i class="now-ui-icons users_single-02"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Account</span>
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="panel-header panel-header-lg">
+        <canvas id="bigDashboardChart"></canvas>
+      </div>
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+<h4 class="">Milk Collection  </h4>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="px-5 my-1 text-center">
+    </div>
+   
+   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#DiaryAddModal">
+    Add Record
+    </button>
+     <!-- form modal -->
+     <div class="modal fade" id="DiaryAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add</h5>
+            <button type="button" class="close" id="canceless" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="DiaryAddForm" >
+              {% csrf_token %}
+              <input type="hidden" id="id" name="id">
+
+    <div class="mb-3">
+        <label class="form-label">Date</label>
+        <input type="date" name="date" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Supply Number</label>
+        <input type="text" name="supply_number" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="breeds" class="form-label">COLLECTION STATUS</label>
+        <select class="form-control" id="collection_status" name="collection_status">
+            <option value="Accepted">Accepted</option>
+            <option value="Rejected">Rejected</option> 
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Reason</label>
+        <input type="text"  name="reason" class="form-control" >
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Total Kg/Litres</label>
+        <input type="number" step="0.01" name="total" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Name of Centre</label>
+        <input type="text" name="name_of_center" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Name of Agent</label>
+        <input type="text" name="name_of_agent" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Remarks</label>
+        <textarea name="remarks" class="form-control"></textarea>
+    </div>
+            <div class="modal-footer">
+                <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="submit" id="submit" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- form modal end -->
+    <!--edit Modal  -->
+     <!-- form modal -->
+     <div class="modal fade" id="DiaryEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Record</h5>
+            <button type="button" id="cancel" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          <form id="DiaryEditForm">
+            {% csrf_token %}
+            <input type="hidden" id="id" name="id">
+
+    <div class="mb-3">
+        <label class="form-label">Date</label>
+        <input type="date" name="date" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Supply Number</label>
+        <input type="text" name="supply_number" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="breeds" class="form-label">COLLECTION STATUS</label>
+        <select class="form-control" id="collection_status" name="collection_status">
+            <option value="Accepted">Accepted</option>
+            <option value="Rejected">Rejected</option> 
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Reason</label>
+        <input type="text"  name="reason" class="form-control" placeholder="N/A" >
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Total Kg/Litres</label>
+        <input type="number" step="0.01" name="total" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Name of Centre</label>
+        <input type="text" name="name_of_center" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Name of Agent</label>
+        <input type="text" name="name_of_agent" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Remarks</label>
+        <textarea name="remarks" class="form-control"></textarea>
+    </div>
+          <div class="modal-footer">
+              <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" id="submit" class="btn btn-primary">Save</button>
+          </div>
+          </div>
+        </form>
+        
+        </div>
+      </div>
+    </div>
+    <!-- edit modal end -->
+    
+    <!-- Display Modal  Modal -->
+    <div class="modal fade" id="dsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" id="invoice">
+          <h2 class="text-center text-uppercase">{{ request.user.cooperative_name }}</h2>
+          <h3 class="text-center">Daily Milk Collection </h3>
+          <div class="modal-body" id="modalBody">
+          </div>
+          <div class="modal-footer" id="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closeModalBtn1">Close</button>
+            <button type="button" id="download" class="btn btn-primary">Download Pdf</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /. Display  modal -->
+<!-- sucess Modal -->
+
+
+
+    
+    <style>
+      /* .select,
+      #locale {
+        width: 100%;
+      }
+      .like {
+        margin-right: 10px;
+      }
+      .mytable th{
+        font-size: 6px;
+
+      } */
+    </style>
+     <!-- Placeholder for the modal -->
+
+    <div id="toolbar">
+      <h5 class="text-danger">Click the plus sign To view More</h5>
+    </div>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        font-size: medium;
+      }
+      </style>
+      <div class="select" hidden>
+        <select class="form-control" id="locale">
+          <option value="en-" selected>en-US</option>
+        </select>
+      </div>
+      
+    <table
+      id="table"
+      class="table"
+      data-search="false"
+      data-show-refresh="true"
+      data-show-toggle="true"   
+      data-show-fullscreen="true"
+      data-show-columns="true"
+      data-show-columns-toggle-all="true"
+      data-detail-view="true"
+      data-show-export="false"
+      data-click-to-select="true"
+      data-detail-formatter="detailFormatter"
+      data-minimum-count-columns="15"
+      data-show-pagination-switch="true"
+      data-pagination="true"
+      data-id-field="id"
+      data-page-list="[10, 25, 50, 100, all]"
+      data-show-footer="true"
+      data-side-pagination="server"
+      data-url="{% url 'collection_list' %}"
+      data-response-handler="responseHandler">
+    </table>
+    <script>
+
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+
+      var $table = $('#table')
+      var $remove = $('#remove')
+      var selections = []
+    
+      function getIdSelections() {
+        return $.map($table.bootstrapTable('getSelections'), function (row) {
+          return row.id
+        })
+      }
+    
+      function responseHandler(res) {
+        return {
+                total: res.count,
+                rows: res.results
+            };
+      }
+      function detailFormatter(index, row) {
+    var html = '<table class="table">';
+    var columns = $('#table').bootstrapTable('getOptions').columns[0]; 
+    
+    // Create table rows
+    $.each(columns, function (index, column) {
+        if (column.field !== 'state' && column.field !== 'operate') {
+            html += '<tr>';
+            html += '<td><b>' + column.title + '</b></td>'; 
+            var key = column.field;
+            var value = row[key];
+            
+            // Check if the value is a valid date and format it
+            if (moment(value, moment.ISO_8601, true).isValid()) {
+                value = moment(value).format('DD-MM-YYYY');
+            }
+
+            html += '<td>' + value + '</td>'; 
+            html += '</tr>';
+        }
+    });
+
+    html += '</table>';
+    
+    
+   
+    $('#modalBody').html(html);
+    
+    
+    $('#dsModal').modal('show');
+
+    
+    $('#closeModalBtn').on('click', function() {
+        $('#dsModal').modal('hide');
+    });
+    $('#closeModalBtn1').on('click', function() {
+        $('#dsModal').modal('hide');
+    });
+}
+$('#DiaryAddForm').submit(function(e) {
+    e.preventDefault(); // Prevent the default form submission
+    
+    // Serialize form data
+    var formData = $(this).serialize();
+    console.log(formData);
+    
+    // Send AJAX request
+    $.ajax({
+        type: 'POST',
+        url: "/collection/create/",
+        data: formData,
+        success: function(data) {
+            $('#DiaryAddModal').modal('hide');
+            $('#statusSuccessModal').modal('show');
+            // Redirect after 3 seconds
+            setTimeout(function() {
+                window.location.reload(); // Reload the page
+            }, 1000); 
+            // Handle success response
+            console.log('Form submitted successfully');
+            console.log(data);   
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.error('Error submitting form:', errorThrown);
+            console.log('Response:', xhr.responseText);
+
+            // Optionally, you can display the error in a modal or alert
+            alert('Error: ' + xhr.responseText);
+        }
+    });
+});
+function operateFormatter(value, row, index) {
+  return [
+     '<div class="btn-group" role="group" aria-label="Actions">',
+          '<a class="btn btn-warning btn-sm edit" id="edit" href="javascript:void(0)" title="Edit">',
+              '<i class="fa fa-edit"></i> Edit',
+          '</a>',
+          '<a class="btn btn-danger btn-sm remove" href="javascript:void(0)" title="Remove">',
+              '<i class="fa fa-trash"></i> Delete',
+          '</a>',
+      '</div>'
+  ].join('');
+}
+     
+      window.operateEvents = {
+        'click .edit': function(e, value, row, index) {
+    // Fetch the ID from the row data (assuming 'id' is a property in your data)
+    const objectId = row.id;
+    console.log(objectId)
+
+    // Check if ID is available before proceeding
+    if (!objectId) {
+      console.error('Error: Missing ID in row data');
+      return;
+    }
+
+    $('#DiaryEditModal').modal('show');
+
+    // Populate form fields after the modal is shown (ensures elements exist)
+    $('#DiaryEditModal').on('shown.bs.modal', function () {
+      const formFields = $('#DiaryEditModal .editable-field');
+
+      formFields.each(function(i, field) {
+    const fieldName = $(field).attr('name');
+    const fieldValue = row[fieldName];
+
+    if ($(field).is('select')) {
+        
+        $(field).val(fieldValue || ''); 
+    } else {
+
+        $(field).val(fieldValue || ''); 
+    }
+});
+    });
+
+    $('#cancel').click(function() {
+      $('#DiaryEditModal').modal('hide');
+    });
+    $('#canceless').click(function() {
+      $('#DiaryEditModal').modal('hide');
+    });
+
+    e.preventDefault();
+
+    
+    $('#submitbills').on('click', function () {
+  const formFields = $('#DiaryEditModal .editable-field');
+
+  formFields.each(function (i, field) {
+    const fieldName = $(field).attr('name');
+    const fieldValue = $(field).val();
+
+    row[fieldName] = fieldValue; 
+  });
+   
+  fetch(`/collection/update/${row.id}/`, {
+    method: 'PATCH',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+    },
+    body: JSON.stringify(row)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+    
+    window.location.reload()
+   
+      
+})
+.then(data=>{
+  $('#statusSuccessModal').modal('show');
+
+})
+.catch(error => console.error('Error:', error));
+});
+
+  },
+        'click .remove': function (e, value, row, index) {
+    // Show confirmation dialog
+    const confirmation = window.confirm("Are you sure you want to delete this record?");
+    
+    // If the user confirms, proceed with the deletion
+    if (confirmation) {
+        // Send an AJAX request to the Django backend to delete the record
+        $.ajax({
+            url: `/collection/delete/${row.id}/`, // Replace with the appropriate URL
+            type: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            }, // Include CSRF token if required
+            success: function () {
+                // If deletion is successful, remove the row from the Bootstrap Table
+                $table.bootstrapTable('remove', {
+                    row: 'id',
+                    values: [row.id]
+                });
+                window.location.reload(); // Optionally reload the page after removal
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                // Handle errors, if any
+                console.error('Error deleting record:', errorThrown);
+                // Optionally, you can display error messages or handle UI updates here
+            }
+        });
+    } else {
+        // If the user cancels the action, do nothing (optional: add a cancel log message)
+        console.log('Deletion canceled');
+    }
+      }
+      }
+      function totalTextFormatter(data) {
+        return 'Total'
+      }
+    
+      function totalNameFormatter(data) {
+        return data.length
+      }
+    
+      function totalPriceFormatter(data) {
+        var field = this.field
+        return '$' + data.map(function (row) {
+          return +row[field].substring(1)
+        }).reduce(function (sum, i) {
+          return sum + i
+        }, 0)
+      }
+      
+    
+      function initTable() {
+      // Process the fetched data and initialize Bootstrap Table
+    $table.bootstrapTable('destroy').bootstrapTable({
+      height: 550,
+      locale: $('#locale').val(),
+      columns: [
+        [
+  {
+    field: 'state',
+    checkbox: true,
+    align: 'center',
+    valign: 'middle'
+  },
+  {
+    field: 'date',
+    title: 'Date',
+    sortable: true,
+    align: 'center',
+    formatter: function(value) {
+      return moment(value).format('DD-MM-YYYY');
+    }
+  },
+  {
+    field: 'supply_number',
+    title: 'Supply Number',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'collection_status',
+    title: 'Collection Status',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'reason',
+    title: 'Reason',
+    sortable: true,
+    align: 'center'
+  },
+
+  {
+    field: 'total',
+    title: 'Total (Kg/Litres)',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'name_of_center',
+    title: 'Centre Name',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'name_of_agent',
+    title: 'Agent Name',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'remarks',
+    title: 'Remarks',
+    sortable: true,
+    align: 'center'
+  },
+
+         
+          {
+            field: 'operate',
+            title: 'Item Operate',
+            align: 'center',
+            clickToSelect: false,
+            events: window.operateEvents,
+            formatter: operateFormatter
+          }
+        ],
+        [
+        ]
+        ]
+    })
+    $table.on('check.bs.table uncheck.bs.table ' +
+      'check-all.bs.table uncheck-all.bs.table',
+    function () {
+      $remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+      // save your data, here just save the current page
+      selections = getIdSelections()
+      // push or splice the selections if you want to save all data selections
+    })
+    $table.on('all.bs.table', function (e, name, args) {
+      
+    })
+    $remove.click(function () {
+      var ids = getIdSelections()
+      $table.bootstrapTable('remove', {
+        field: 'id',
+        values: ids
+      })
+      $remove.prop('disabled', true)
+    })
+  }
+
+  $(function() {
+    initTable()
+
+    $('#locale').change(initTable)
+  })
+    </script>
+  
+  <script>
+    window.onload = function () {
+        document.getElementById("download")
+            .addEventListener("click", () => {
+                const invoice = document.getElementById("invoice");
+                console.log(invoice);
+                console.log(window);
+                var opt = {
+                    margin: 1,
+                    filename: 'farmer records.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+              
+                document.getElementById("modal-footer").style.display = "none";
+                //document.getElementById("closeModalBtn").style.display = "none";
+
+                html2pdf().from(invoice).set(opt).save().then(() => {
+                    
+                    window.location.reload();
+                });
+                
+                
+                document.getElementById("modal-footer").style.display = "none";
+            });
+    }
+</script>
+
+
+    
+<!-- Placeholder for the modal -->  
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.28.0/tableExport.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table-locale-all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/extensions/export/bootstrap-table-export.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+
+  <script src="{% static 'portals/assets/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'portals/assets/js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'portals/assets/js/main.js' %}"></script>
+  <script src="{% static 'portals/assets/js/scripts.js' %}"></script>
+  
+  
+  <!--  Notifications Plugin    -->
+  
+
+<!-- start of template -->
+</div>
+<!-- /.row (main row) -->
+</div><!-- /.container-fluid -->
+<!-- end  of template -->
+             
+      <footer class="footer">
+        <div class=" container-fluid ">
+            <div class="copyright">
+              &copy; Copyright <strong><span>SoinVet</span></strong>. All Rights Reserved
+              <div class="credits">
+              
+            </div>
+          </div>
+        </footer><!-- End Footer -->
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </main>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

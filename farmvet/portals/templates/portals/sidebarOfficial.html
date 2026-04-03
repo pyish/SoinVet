@@ -1,0 +1,461 @@
+{% load static %}
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+<style>
+  .sidebar-submenu a.dropdown-item {
+    font-weight: bold;   /* Make all dropdown links bold */
+}
+</style> 
+
+<div class="page-wrapper chiller-theme ">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+      <div class="sidebar-brand">
+        <a href="{% url 'official-portal' %}">Government Official</a>
+        <div id="close-sidebar">
+          <i class="fas fa-times fa-lg"></i>
+        </div>
+      </div>
+      <div class="sidebar-header">
+        <div class="user-pic">
+          <img class="img-responsive img-rounded" src="{% static 'portals/assets/img/user.png' %}"
+            alt="User picture">
+        </div>
+        <div class="user-info">
+          <span class="user-name">
+            <strong>{{request.user}}</strong>
+          </span>
+          <span class="user-role">Govenment official</span>
+          <span class="user-status">
+            <i class="fa fa-circle"></i>
+            <span>Online</span>
+          </span>
+        </div>
+      </div>
+      <!-- sidebar-header  -->
+      <!-- sidebar-search  -->
+      <div class="sidebar-menu">
+        <ul>
+          <li class="header-menu">
+            <span>Services</span>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#" style="font-weight: bold;">
+              <i class="fa fa-folder-open"></i>
+              <span>Sub-county Veterinary Records</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li class="sidebar-dropdown">
+                  <a href="#" style="font-weight: bold;">
+                    <span>Ward Veterinary Records</span>
+                  </a>
+                
+                  <div class="sidebar-submenu">
+                    <ul>
+                
+                      <!-- Practitioners -->
+                      <li class="sidebar-dropdown">
+                        <a href="#">
+                          <span style="font-weight: bold;">Practitioners</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                          <ul>
+                            <li>
+                              <a class="dropdown-item" href="{% url 'practitioner_record_view' %}">
+                                Registered Practitioners
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                
+                      <!-- Meat Inspection -->
+                      <li class="sidebar-dropdown">
+                        <a href="#">
+                          <span style="font-weight: bold;">Meat Inspection</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                          <ul>
+                            <li>
+                              <a class="dropdown-item" href="{% url 'slaughterhouse-view' %}">
+                                Slaughter House
+                              </a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="{% url 'daily-kills-view' %}">
+                                Daily Kills
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                
+                      <!-- Livestock Movement -->
+                      <li class="sidebar-dropdown">
+                        <a href="#">
+                          <span style="font-weight: bold;">Livestock Movement</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                          <ul>
+                            <li>
+                              <a class="dropdown-item" href="{% url 'movement-permit-view' %}">
+                                Movement Permit
+                              </a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="{% url 'no_objection_report_view' %}">
+                                No Objection
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                
+                      <!-- Disease Reports -->
+                      <li class="sidebar-dropdown">
+                        <a href="#">
+                          <span style="font-weight: bold;">Disease Reports</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                          <ul>
+                            <li>
+                              <a href="{% url 'disease-report-view' %}">
+                                Disease Reports
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                
+                      <!-- Artificial Insemination -->
+                      <li class="sidebar-dropdown">
+                        <a href="#">
+                          <span style="font-weight: bold;">Artificial Insemination</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                          <ul>
+                            <li>
+                              <a class="dropdown-item" href="{% url 'ai_official' %}">
+                                Artificial Insemination
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                
+                      <!-- Vaccination -->
+                      <li class="sidebar-dropdown">
+                        <a href="#">
+                          <span style="font-weight: bold;">Vaccination</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                          <ul>
+                            <li>
+                              <a class="dropdown-item" href="{% url 'vaccination-official' %}">
+                                Vaccination
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                
+                      <!-- Extension Services -->
+                      <li class="sidebar-dropdown">
+                        <a href="#">
+                          <span style="font-weight: bold;">Extension Services</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                          <ul>
+                            <li>
+                              <a class="dropdown-item" href="">
+                                Extension Services
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                
+                      <!-- Staff Reports -->
+                     
+                
+                    </ul>
+                  </div>
+                </li>
+                
+                <li class="sidebar-dropdown">
+                  <a href="#">
+                    <span style="font-weight: bold;">Ward Reports</span>
+                  </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                     
+                      <li><a style="font-weight: bold;" href="{% url 'monthly_report_official' %}">Monthly Reports</a></li>
+                      <li><a style="font-weight: bold;" href="{% url 'quarterly_report_view' %}">Quarterly Reports</a></li>
+                      <li><a style="font-weight: bold;" href="{% url 'yearly_report_view' %}">Annually Reports</a></li>
+                      
+                    </ul>
+                  </div>
+                  <li class="sidebar-dropdown">
+                    <a style="font-weight: bold;" href="#">
+                      {% comment %} <i class="fa fa-chart-line"></i> {% endcomment %}
+                      <span>Finance</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        <li>
+                          <a style="font-weight: bold;" href="#">Source Of Income</a>
+                        </li>
+                        <li>
+                          <a style="font-weight: bold;" href="#">Expenses</a>
+                        </li>
+                        
+                        
+                      </ul>
+                    </div>
+                  <li>
+                    <a style="font-weight: bold;" href="">SCVO Main  Activities</a>
+                  </li>
+                  <li>
+                    <a style="font-weight: bold;" href="">Students training</a>
+                  </li>
+                  <li class="sidebar-dropdown">
+                    <a style="font-weight: bold;" href="#">
+                      {% comment %} <i class="fa fa-chart-line"></i> {% endcomment %}
+                      <span>SCVO Inventory</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        <li>
+                          <a style="font-weight: bold;" href="#">Semen</a>
+                        </li>
+                        <li>
+                          <a style="font-weight: bold;" href="#">Vaccines</a>
+                        </li>
+                        <li>
+                          <a style="font-weight: bold;" href="#">Equipment</a>
+                        </li>
+                        
+                        
+                      </ul>
+                    </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#" style="font-weight: bold;">
+              <i class="fa fa-folder-open"></i>
+              <span>County Director Veterinary Records</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+          
+                <!-- Practitioners -->
+                <li class="sidebar-dropdown">
+                  <a href="#">
+                    <span style="font-weight: bold;">SCVO Statistics</span>
+                  </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                      <li>
+                        <a class="dropdown-item" href="{% url 'practitioners_gov' %}" >
+                          Practitioners
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="{% url 'artificial_inseminations_view_gov' %}" >
+                          Artificial Insemination
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="{% url 'slaughterhouse-view' %}">
+                         Slaugterhouses
+                        </a>
+                      </li>
+                      {% comment %} <li>
+                        <a class="dropdown-item" href="">
+                         Butcher Details
+                        </a>
+                      </li> {% endcomment %}
+                      <li>
+                        <a class="dropdown-item" href="{% url 'daily-kills-page-gov' %}">
+                         Daily Kills
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="{% url 'movement-permits-gov' %}">
+                         Movement Permit
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="{% url 'no-objections-view-gov' %}">
+                        No Objections Records
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="{% url 'no-objections-view-gov' %}" >
+                         Disease Reports
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="{% url 'vaccinations-list-gov' %}">
+                         Vaccination
+                        </a>
+                      </li>
+
+                      <li>
+                        <a class="dropdown-item" href="{%url 'extension_services_view_gov'%}">
+                          Extension Services
+                        </a>
+                      </li>
+                     
+                    </ul>
+                  </div>
+                </li>
+                <!-- Practitioners -->
+                <li class="sidebar-dropdown">
+                  <a href="#">
+                    <span style="font-weight: bold;">SCVO Reports</span>
+                  </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                      <li>
+                        <a class="dropdown-item" href="">
+                         Monthly Reports
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="">
+                         Quarterly Reports
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="">
+                         Yearly Reports
+                        </a>
+                      </li>
+                      
+                    </ul>
+                  </div>
+                </li>
+                <!-- Practitioners -->
+                <li class="sidebar-dropdown">
+                  <a href="#">
+                    <span style="font-weight: bold;">Finance</span>
+                  </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                     
+                      <li>
+                        <a class="dropdown-item" href="{%url 'revenue-view-gov'%}">
+                         Revenue Collection
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="">
+                         Expenses
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <!-- Practitioners -->
+               
+                <!-- Practitioners -->
+                <li class="sidebar-dropdown">
+                  <a href="#">
+                    <span style="font-weight: bold;">County Inventory</span>
+                  </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                      
+                    </ul>
+                  </div>
+                </li>
+                <!-- Practitioners -->
+                <li class="sidebar-dropdown">
+                  <a href="#">
+                    <span style="font-weight: bold;">County Partners</span>
+                  </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                     
+                      
+                    </ul>
+                  </div>
+                </li>
+                <!-- Practitioners -->
+                <li class="sidebar-dropdown">
+                  <a href="#">
+                    <span style="font-weight: bold;">County Staff</span>
+                  </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                     
+                      <li>
+                        <a class="dropdown-item" href="">
+                         Employment Details
+                        </a>
+                      </li>
+                      <li>
+                        <li class="sidebar-dropdown">
+                          <a href="#">
+                            <span style="font-weight: bold;">Leave</span>
+                          </a>
+                          <div class="sidebar-submenu">
+                            <ul>
+                              <li>
+                                <a class="dropdown-item" href="{%url 'leave-view-gov'%}">
+                                 Leave Request
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="">
+                                 Leave Status
+                                </a>
+                              </li>
+                              
+                            </ul>
+                          </div>
+                        </li>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <!-- Practitioners -->
+                
+                
+          
+                
+              </ul>
+            </div>
+          </li>
+          
+          <li class="">
+            <a href="{%url 'logout'%}">
+              <i class="fa fa-power-off" style="font-size:28px;color:red"></i>
+
+              <span>Logout</span>
+            </a>
+          </li>
+      </div>
+      <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+    <div class="sidebar-footer">
+    
+  </nav>
+  <!-- sidebar-wrapper  -->
+  
+

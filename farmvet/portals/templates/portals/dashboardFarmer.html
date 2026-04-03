@@ -1,0 +1,1112 @@
+{% extends 'portals/base.html' %}
+
+{% load static %}
+
+{% block content %}
+{% include 'portals/sidebarFarmer.html' %}
+
+<main class="page-content">
+<div class="container-fluid">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+   
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#pablo">
+                  <i class="now-ui-icons media-2_sound-wave"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Stats</span>
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="now-ui-icons location_world"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Some Actions</span>
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Account Management</a>
+                  <a class="dropdown-item" href="#">Profile picture</a>
+                  <a class="dropdown-item" href="#">Change Password</a>
+                  <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#pablo">
+                  <i class="now-ui-icons users_single-02"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Account</span>
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="panel-header panel-header-lg">
+      </div>
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                                <h4 class="">Farmer Dashboard</h4>
+                                  <!-- Content Wrapper. Contains page content -->
+                                  <div class="card-body">
+                                    <div class="row">
+                            
+                            
+                                      <div class="col-lg-3 col-6">
+                                        <!-- small box -->
+                                        <div class="small-box bg-info">
+                                          <div class="inner">
+                                            <h3 id="expenses_output_panel"></h3>
+                            
+                                            <p>Expenses</p>
+                                          </div>
+                                          <div class="icon">
+                                            <i class="ion ion-bag"></i>
+                                          </div>
+                                          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                        </div>
+                                      </div>
+                                      <!-- ./col -->
+                                      <div class="col-lg-3 col-6">
+                                        <!-- small box -->
+                                        <div class="small-box bg-success">
+                                          <div class="inner">
+                                            <h3 id="stock_total_panel"><sup style="font-size: 20px"></sup></h3>
+                            
+                                            <p>Sales Of Stock</p>
+                                          </div>
+                                          <div class="icon">
+                                            <i class="ion ion-stats-bars"></i>
+                                          </div>
+                                          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                        </div>
+                                      </div>
+                                      <!-- ./col -->
+                                      <div class="col-lg-3 col-6">
+                                        <!-- small box -->
+                                        <div class="small-box bg-warning">
+                                          <div class="inner">
+                                            <h3 id="payment_total_panel"></h3>
+                            
+                                            <p>Payments</p>
+                                          </div>
+                                          <div class="icon">
+                                            <i class="ion ion-person-add"></i>
+                                          </div>
+                                          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                        </div>
+                                      </div>
+                                      <!-- ./col -->
+                                      <div class="col-lg-3 col-6">
+                                        <!-- small box -->
+                                        <div class="small-box bg-danger">
+                                          <div class="inner">
+                                            <h3 id="net_profit"></h3>
+                            
+                                            <p>Net Profit</p>
+                                          </div>
+                                          <div class="icon">
+                                            <i class="ion ion-pie-graph"></i>
+                                          </div>
+                                          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                        </div>
+                                      </div>
+                                      
+                            
+                            
+
+
+          
+        <div class="card mb-4">
+          <div class="card-header border-0">
+            <h3 class="card-title">Statistics</h3>
+            <div class="card-tools">
+              <a href="#" class="btn btn-tool btn-sm"> <i class="bi bi-download"></i> </a>
+              <a href="#" class="btn btn-tool btn-sm"> <i class="bi bi-list"></i> </a>
+            </div>
+          </div>
+          <div class="card-body table-responsive p-0">
+            <table class="table table-striped align-middle">
+              <thead>
+                <tr>
+                  <th>Records</th>                      
+                  <th></th> 
+                  <th>Category</th>
+                  <th>Query</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="recordsTable">
+                
+                <!-- 1. Calving -->
+                <tr>
+                  <td>Calving</td>
+                  <td><p></p></td>
+                  <td>
+                    <select class="form-control" id="calvingPeriodSelect" style="width: 150px;">
+                      <option value="all">All Time</option> 
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="3months">Last 3 Months</option>
+                      <option value="6months">Last 6 Months</option>
+                      <option value="yearly">Last 1 Year</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select class="form-control" id="calfSexSelect" style="width: 150px;">
+                      <option value="">All Sexes</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                  </td>
+                  <td><input type="date" id="calvingDateFrom" value="2020-01-01" class="form-control" style="width: 150px;"></td>
+                  <td><input type="date" id="calvingDateTo" value="2025-01-01" class="form-control" style="width: 150px;"></td>
+                  <td><h2 id="calving_total">0</h2></td>
+                </tr>
+                <!-- 2. Milk Records -->
+                <tr>
+                  <td>Milk Records</td>
+                  <td>
+                    <select class="form-control" id="cow_name_dropdown" style="width: 150px;">
+                      <option value="">All Cows</option>
+                      {% for cow in cows %}
+                        <option value="{{ cow.name }}">{{ cow.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </td>
+                  <td>
+                    <select class="form-control" id="time_dropdown" style="width: 150px;">
+                      <option value="">All Times</option>
+                      <option value="Morning">Morning</option>
+                      <option value="Afternoon">Afternoon</option>
+                      <option value="Evening">Evening</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select class="form-control" id="timePeriodSelect" style="width: 150px;">
+                      <option value="">All Times</option>
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="monthly">Monthly</option>
+                    <option value="3months">Last 3 Months</option>
+                    <option value="6months">Last 6 Months</option>
+                    <option value="yearly">Last 1 Year</option>
+                    </select>
+                  </td>
+                  <td><input type="date" id="milk_date_from" value="2020-01-01" class="form-control" style="width: 150px;"></td>
+                  <td><input type="date" id="milk_date_to" class="form-control" style="width: 150px;"></td>
+                  <td>
+                    <h4 id="milk_output"></h4>
+                    <h4 id="milk_output_panel" style="display:none;"></h4>
+                  </td>
+                </tr>
+                <!--milk supply-->
+                <tr>
+                  <td>Milk Supply</td>
+                  <td><p></p></td>
+                  <td>
+                    <select class="form-control" id="milkSupplyPeriodSelect" style="width: 150px;">
+                      <option value="all">All Time</option> 
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="3months">Last 3 Months</option>
+                    <option value="6months">Last 6 Months</option>
+                    <option value="yearly">Last 1 Year</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select class="form-control" id="milkSupplyBuyerCategorySelect" style="width: 150px;">
+                      <option value="">All Buyers</option>
+                      <option value="Neighbour">Neighbour</option>
+                      <option value="Hotel">Hotel</option>
+                      <option value="Cooperative">Cooperative</option>
+                      <option value="Institution">Institution</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="date" id="milkSupplyDateFrom" value="2020-01-01" class="form-control" style="width: 150px;">
+                  </td>
+                  <td>
+                    <input type="date" id="milkSupplyDateTo" value="2025-01-01" class="form-control" style="width: 150px;">
+                  </td>
+                  <td>
+                    <h2 id="milkSupply_total">0</h2>
+                  </td>
+                </tr>
+                
+                <!-- 3. Milk Sales -->
+                <tr>
+                  <td>Milk Payments</td>
+                  <td><p></p></td>
+                  <td>
+                    <select class="form-control" id="period_dropdown" style="width: 150px;">
+                      <option value="all">All Time</option>
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="two_weeks">Two Weeks</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="yearly">Yearly</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select class="form-control" id="category_dropdown" style="width: 150px;">
+                      <option value="">All Payments</option>
+                      {% for value,display in SALES_TO %}
+                        <option value="{{ value }}">{{ display }}</option>
+                      {% endfor %}
+                    </select>
+                  </td>
+                  <td><input type="date" id="payment_date_from" value="2020-01-01" class="form-control" style="width: 150px;"></td>
+                  <td><input type="date" id="payment_date_to" value="2025-01-01" class="form-control" style="width: 150px;"></td>
+                  <td><h4 id="payment_total"></h4></td>
+                </tr>
+            
+                <!-- 4. Sales Of Stock -->
+                <tr>
+                  <td>Sales Of Stock</td>
+                  <td><p></p></td>
+                  <td>
+                    <select id="breed_dropdown" class="form-control" style="width: 150px;">
+                      <option value="All">All</option>
+                      {% for value, display in BREED_CHOICES %}
+                        <option value="{{ value }}">{{ display }}</option>
+                      {% endfor %}
+                    </select>
+                  </td>
+                  <td>
+                    <select class="form-control" id="age_dropdown" style="width: 150px;">
+                      <option value="All">All</option>
+                      {% for value,display in AGE %}
+                        <option value="{{ value }}">{{ display }}</option>
+                      {% endfor %}
+                    </select>
+                  </td>
+                  <td><input type="date" id="stock_date_from" value="2020-01-01" class="form-control" style="width: 150px;"></td>
+                  <td><input type="date" id="stock_date_to" value="2025-01-01" class="form-control" style="width: 150px;"></td>
+                  <td><h4 id="stock_total">0</h4></td>
+                </tr>
+            
+                <!-- 5. Expenses -->
+                <tr>
+                  <td>Expenses</td>
+                  <td><p></p></td>
+                  <td>
+                    <select class="form-control" id="categorySelect" style="width: 150px;">
+                      <option value="all">All</option>
+                      <option value="vet_bills">Veterinary Bills</option>
+                      <option value="archaricides">Acaricides</option>
+                      <option value="hygiene">Hygiene</option>
+                      <option value="salaries">Salaries</option>
+                      <option value="feeds">Feeds</option>
+                      <option value="equipment">Equipment</option>
+                      <option value="drugs">Drugs</option>
+                      <option value="minerals">Minerals</option>
+                      <option value="insurance">Insurance</option>
+                      <option value="other">Other Expenses</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select class="form-control" id="timePeriodSelectExpenses" style="width: 150px;" hidden>
+                      <option value="all">All Time</option>
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="two_weeks">Two Weeks</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="yearly">Yearly</option>
+                    </select>
+                  </td>
+                  <td><input type="date" id="expenses_date_from" value="2020-01-01" class="form-control" style="width: 150px;"></td>
+                  <td><input type="date" id="expenses_date_to" value="2025-01-01" class="form-control" style="width: 150px;"></td>
+                  <td><h2 id="expenses_output">0</h2></td>
+                </tr>
+            
+              </tbody>
+            </table>
+            
+          
+          </div>
+        </div>
+        
+          <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </main>
+   
+             
+     
+      
+      <footer class="footer">
+        <div class=" container-fluid ">
+            <div class="copyright">
+              &copy; Copyright <strong><span>SoinVet</span></strong>. All Rights Reserved
+              <div class="credits">
+              Designed by <a>ishasir</a>
+            </div>
+          </div>
+        </footer><!-- End Footer -->
+  <!--   Core JS Files   -->
+  <script src="{% static 'portals/assets/js/vanilla-calendar.min.js' %}"></script>
+  <script src="{% static 'portals/assets/js/core/jquery.min.js' %}"></script>
+  <script src="{% static 'portals/assets/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'portals/assets/js/core/bootstrap.min.js' %}"></script>
+ 
+ 
+  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="{% static 'portals/assets/js/now-ui-dashboard.min.js' %}" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+  <script src="{% static 'portals/assets/js/main.js' %}"></script>
+  
+      <script src="{% static 'portals/assets/dist/js/adminlte.js' %}"></script>
+      <script src="{% static 'portals/assets//js/calendar.js' %}"></script>
+      <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+      <script src="{% static 'portals/assets/dist/js/pages/dashboard.js' %}"></script>
+      <!-- AdminLTE for demo purposes -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.5.1/snap.svg.js" integrity="sha512-2B4yJ2DGhmYITzY51PcSK5pxQilqi1Cl3wgI8dq8phWjbVAw9SmcaTZp+QsSCdV/xKkxttyYolU0usNNG1ICbQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+      <script src="{% static 'portals/assets/dist/js/demo.js' %}"></script>
+      <script src="{% static 'portals/assets/js/clock.js' %}"></script>
+      
+     
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const calendar = new VanillaCalendar('#calendar');
+          calendar.init();
+        });
+      </script>
+  <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+
+    });
+  </script>
+
+  <script>
+    function updateNetProfit() {
+      const salesText = document.getElementById('stock_total_panel')?.textContent || "KSH0";
+      const paymentsText = document.getElementById('payment_total_panel')?.textContent || "KSH0";
+      const expensesText = document.getElementById('expenses_output_panel')?.textContent || "KSH0";
+    
+      const parseAmount = (text) => parseFloat(text.replace(/[^\d.]/g, '')) || 0;
+    
+      const sales = parseAmount(salesText);
+      const payments = parseAmount(paymentsText);
+      const expenses = parseAmount(expensesText);
+    
+      const netProfit = sales + payments - expenses;
+    
+      const netProfitFormatted = `KSH ${netProfit.toFixed(2)}`;
+      const netProfitElement = document.getElementById('net_profit');
+      const netProfitPanelElement = document.getElementById('net_profit_panel');
+    
+      if (netProfitElement) netProfitElement.innerHTML = `<h3>${netProfitFormatted}</h3>`;
+      if (netProfitPanelElement) netProfitPanelElement.innerHTML = `<h3>${netProfitFormatted}</h3>`;
+    }
+    
+    // Hook into DOM updates
+    const observer = new MutationObserver(updateNetProfit);
+    
+    ['stock_total_panel', 'payment_total_panel', 'output_panel'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el, { childList: true, subtree: true });
+    });
+    
+    document.addEventListener("DOMContentLoaded", updateNetProfit);
+
+    
+    document.addEventListener("DOMContentLoaded", function () {
+      const filter = {
+          type: "stock",
+          breedDropdown: "breed_dropdown",
+          ageDropdown: "age_dropdown",
+          dateFromInput: "stock_date_from",
+          dateToInput: "stock_date_to",
+          totalElement: "stock_total",
+          totalElement2: "stock_total_panel",
+          apiUrl: "/animal-sales-list/",
+          dateField: "date_sold",
+          breedField: "breed",
+          ageField: "age",
+          numberSoldField: "number_sold",
+          sellingPriceField: "selling_price"
+      };
+  
+      const breedDropdown = document.getElementById(filter.breedDropdown);
+      const ageDropdown = document.getElementById(filter.ageDropdown);
+      const dateFromInput = document.getElementById(filter.dateFromInput);
+      const dateToInput = document.getElementById(filter.dateToInput);
+      const totalElement = document.getElementById(filter.totalElement);
+      const totalElement2 = document.getElementById(filter.totalElement2);
+      const today = new Date();
+      dateToInput.value = today.toISOString().split('T')[0];
+  
+      let fetchedData = [];
+  
+      async function fetchData() {
+          try {
+              const response = await fetch(filter.apiUrl);
+              const data = await response.json();
+              //console.log("data", data.results);
+              fetchedData = data.results || [];
+  
+              filterData();
+          } catch (error) {
+              console.error("Error fetching data:", error);
+          }
+      }
+  
+      function filterData() {
+          const dateFrom = new Date(dateFromInput.value);
+          const dateTo = new Date(dateToInput.value);
+          const selectedBreed = breedDropdown ? breedDropdown.value : null;
+          const selectedAge = ageDropdown ? ageDropdown.value : null;
+  
+          if (fetchedData.length === 0) {
+              console.warn("No data to filter!");
+              totalElement.textContent = "KSH0.00";
+              totalElement2.textContent = "KSH0.00";
+              return;
+          }
+  
+          const filteredData = fetchedData.filter(record => {
+              const recordDate = new Date(record[filter.dateField]);
+              const dateMatch = (!dateFromInput.value || recordDate >= dateFrom) &&
+                                (!dateToInput.value || recordDate <= dateTo);
+              const breedMatch = selectedBreed === "All" || record[filter.breedField] === selectedBreed;
+              const ageMatch = selectedAge === "All" || record[filter.ageField] === selectedAge;
+  
+              return dateMatch && breedMatch && ageMatch;
+          });
+  
+          const totalIncome = filteredData.reduce((sum, record) => {
+              const numberSold = parseFloat(record[filter.numberSoldField]) || 0;
+              const sellingPrice = parseFloat(record[filter.sellingPriceField]) || 0;
+              return sum + (numberSold * sellingPrice);
+          }, 0);
+  
+          totalElement.textContent = `KSH${totalIncome.toFixed(2)}`;
+          totalElement2.textContent = `KSH${totalIncome.toFixed(2)}`;
+      }
+  
+      [dateFromInput, dateToInput, breedDropdown, ageDropdown].forEach(element => {
+          if (element) {
+              element.addEventListener("change", filterData);
+          }
+      });
+  
+      fetchData();
+  });
+  
+//Expenses
+  $(document).ready(function() {
+    function setTodayAsDefaultDateTo() {
+      const today = new Date().toISOString().split('T')[0];
+      $('#expenses_date_to').val(today);
+    }
+
+    function fetchCategoryData(category, timePeriod) {
+        const dateFrom = $('#expenses_date_from').val();
+        const dateTo = $('#expenses_date_to').val();
+        const url = '/expenses/';
+
+        const dateRange = getDateRange(timePeriod);
+
+        $.ajax({
+            url: url,
+            method: 'GET',
+            data: {
+                category: category,
+                date_from: dateRange.startDate,
+                date_to: dateRange.endDate
+            },
+            success: function(response) {
+                let total = 0;
+
+                if (category === 'all') {
+                    total = response.total_for_all_expenses || 0;  
+                } else {
+                    const data = response[category] || [];
+                    data.forEach(item => {
+                        if (category === 'salaries' || category === 'vet_bills') {
+                            total += item.amount || 0;
+                        } else if (category === 'archaricides' || category === 'feeds' || category === 'hygiene' || category === 'equipment' || category === 'drugs') {
+                            total += item.cost || 0;
+                        } else if (category === 'insurance') {
+                            total += item.total || 0;
+                        } else if (category === 'other') {
+                          total += item.cost || 0;
+                      }
+
+                    });
+                }
+
+                $('#expenses_output').html(`<h4>KSH ${total}</h4>`);
+                $('#expenses_output_panel').html(`<h3>KSH ${total}</h3>`);
+            },
+            error: function(error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    }
+
+    function getDateRange(timePeriod) {
+        const today = new Date();
+        let startDate = new Date(today);
+        let endDate = new Date(today);
+
+        switch (timePeriod) {
+            case 'daily':
+                startDate = new Date(today.setDate(today.getDate() - 1));
+                break;
+            case 'weekly':
+                startDate = new Date(today.setDate(today.getDate() - 7));
+                break;
+            case 'monthly':
+                startDate = new Date(today.setMonth(today.getMonth() - 1));
+                break;
+            case 'yearly':
+                startDate = new Date(today.setFullYear(today.getFullYear() - 1));
+                break;
+            default:
+                startDate = today;
+        }
+
+        return {
+            startDate: startDate.toISOString().split('T')[0],
+            endDate: endDate.toISOString().split('T')[0]
+        };
+    }
+
+    $('#categorySelect').on('change', function() {
+        const selectedCategory = $(this).val();
+        const timePeriod = $('#timePeriodSelect').val();
+        fetchCategoryData(selectedCategory, timePeriod);
+    });
+    $('#categorySelect').trigger('change');
+
+    $('#timePeriodSelect').on('change', function() {
+        const selectedCategory = $('#categorySelect').val();
+        const timePeriod = $(this).val();
+        fetchCategoryData(selectedCategory, timePeriod);
+    });
+    setTodayAsDefaultDateTo();
+});
+
+
+
+
+
+
+$(document).ready(function () {
+
+  function setTodayAsDefaultDateTo() {
+    const today = new Date().toISOString().split('T')[0];
+    $('#calvingDateTo').val(today);
+  }
+
+  function fetchCalvingCount(timePeriod) {
+    const customFrom = $('#calvingDateFrom').val();
+    const customTo = $('#calvingDateTo').val();
+    const calfSex = $('#calfSexSelect').val(); // ✅ Get selected calf sex
+    const url = '/expenses/';
+
+    let dateRange;
+
+    if (customFrom && customTo) {
+      dateRange = {
+        startDate: customFrom,
+        endDate: customTo
+      };
+    } else {
+      dateRange = getDateRange(timePeriod);
+    }
+
+    $.ajax({
+      url: url,
+      method: 'GET',
+      data: {
+        date_from: dateRange.startDate,
+        date_to: dateRange.endDate
+      },
+      success: function (response) {
+        const calvingRecords = response.calving || [];
+
+        const filtered = calvingRecords.filter(item => {
+          const calvingDate = new Date(item.date_of_calving);
+          const from = new Date(dateRange.startDate);
+          const to = new Date(dateRange.endDate);
+          const dateInRange = calvingDate >= from && calvingDate <= to;
+
+          const sexMatch = calfSex ? item.calf_sex === calfSex : true; // ✅ Filter by calf_sex
+
+          return dateInRange && sexMatch;
+        });
+
+        const count = filtered.length;
+        $('#calving_total').html(`<h3>${count}</h3>`);
+      },
+      error: function (error) {
+        console.error('Error fetching calving data:', error);
+      }
+    });
+  }
+
+  function getDateRange(timePeriod) {
+    const today = new Date();
+    let startDate = new Date(today);
+    let endDate = new Date(today);
+
+    switch (timePeriod) {
+      case 'daily':
+        startDate.setDate(today.getDate() - 1);
+        break;
+      case 'weekly':
+        startDate.setDate(today.getDate() - 7);
+        break;
+      case 'monthly':
+        startDate.setMonth(today.getMonth() - 1);
+        break;
+      case '3months':
+        startDate.setMonth(today.getMonth() - 3);
+        break;
+      case '6months':
+        startDate.setMonth(today.getMonth() - 6);
+        break;
+      case 'yearly':
+        startDate.setFullYear(today.getFullYear() - 1);
+        break;
+      case 'all':
+        startDate = new Date('2000-01-01');
+        break;
+      default:
+        startDate = today;
+    }
+
+    return {
+      startDate: startDate.toISOString().split('T')[0],
+      endDate: endDate.toISOString().split('T')[0]
+    };
+  }
+
+  // ✅ Period dropdown change
+  $('#calvingPeriodSelect').on('change', function () {
+    const timePeriod = $(this).val();
+
+    // Clear values first
+    $('#calvingDateFrom').val('');
+    $('#calvingDateTo').val('');
+
+    const today = new Date();
+    let fromDate = new Date();
+
+    if (timePeriod === "weekly") {
+        fromDate.setDate(today.getDate() - 7);
+    } else if (timePeriod === "monthly") {
+        fromDate.setMonth(today.getMonth() - 1);
+    } else if (timePeriod === "yearly") {
+        fromDate.setFullYear(today.getFullYear() - 1);
+    }
+
+    // Format to yyyy-mm-dd
+    const formatDate = date => date.toISOString().split('T')[0];
+
+    $('#calvingDateFrom').val(formatDate(fromDate));
+    $('#calvingDateTo').val(formatDate(today));
+
+    fetchCalvingCount(timePeriod);  // Your existing function
+});
+
+  // ✅ Date inputs change
+  $('#calvingDateFrom, #calvingDateTo').on('change', function () {
+    fetchCalvingCount(null);
+  });
+
+  // ✅ Calf sex filter change
+  $('#calfSexSelect').on('change', function () {
+    fetchCalvingCount($('#calvingPeriodSelect').val());
+  });
+
+  setTodayAsDefaultDateTo();
+
+  fetchCalvingCount($('#calvingPeriodSelect').val());
+});
+
+//supply
+$(document).ready(function () {
+
+  function setTodayAsDefaultMilkSupplyDateTo() {
+    const today = new Date().toISOString().split('T')[0];
+    $('#milkSupplyDateTo').val(today);
+  }
+
+  function getMilkSupplyDateRange(period) {
+    const today = new Date();
+    let startDate = new Date(today);
+    let endDate = new Date(today);
+
+    switch (period) {
+      case 'daily':
+        startDate.setDate(today.getDate() - 1);
+        break;
+      case 'weekly':
+        startDate.setDate(today.getDate() - 7);
+        break;
+      case 'monthly':
+        startDate.setMonth(today.getMonth() - 1);
+        break;
+      case '3months':
+        startDate.setMonth(today.getMonth() - 3);
+        break;
+      case '6months':
+        startDate.setMonth(today.getMonth() - 6);
+        break;
+      case 'yearly':
+        startDate.setFullYear(today.getFullYear() - 1);
+        break;
+      case 'all':
+        startDate = new Date('2000-01-01');
+        break;
+      default:
+        startDate = today;
+    }
+
+    return {
+      startDate: startDate.toISOString().split('T')[0],
+      endDate: endDate.toISOString().split('T')[0]
+    };
+  }
+
+  function fetchMilkSupplyCount(timePeriod) {
+    const customFrom = $('#milkSupplyDateFrom').val();
+    const customTo = $('#milkSupplyDateTo').val();
+    const buyerCategory = $('#milkSupplyBuyerCategorySelect').val();
+    const url = '/sales-of-milk/list/'; // Change this if needed
+
+    let dateRange;
+
+    if (customFrom && customTo) {
+      dateRange = {
+        startDate: customFrom,
+        endDate: customTo
+      };
+    } else {
+      dateRange = getMilkSupplyDateRange(timePeriod);
+    }
+
+    $.ajax({
+      url: url,
+      method: 'GET',
+      data: {
+        date_from: dateRange.startDate,
+        date_to: dateRange.endDate
+      },
+      success: function (response) {
+        const milkSupplyRecords = response.results || [];
+
+        const filtered = milkSupplyRecords.filter(item => {
+          const supplyDate = new Date(item.date_of_sales);
+          const from = new Date(dateRange.startDate);
+          const to = new Date(dateRange.endDate);
+          const dateInRange = supplyDate >= from && supplyDate <= to;
+
+          const buyerMatch = buyerCategory ? item.milk_sales_to === buyerCategory : true;
+
+          return dateInRange && buyerMatch;
+        });
+
+        // ✅ Sum total_kg_supplied instead of count
+        const totalKg = filtered.reduce((sum, record) => {
+          const kg = parseFloat(record.total_cash_received) || 0;
+          return sum + kg;
+        }, 0);
+
+        $('#milkSupply_total').html(`<h3>${totalKg.toFixed(2)} kg</h3>`);
+      },
+      error: function (error) {
+        console.error('Error fetching milk supply data:', error);
+      }
+    });
+  }
+
+  // ✅ Dropdown change: period
+  $('#milkSupplyPeriodSelect').on('change', function () {
+    const timePeriod = $(this).val();
+
+    // Get today's date
+    const today = new Date();
+    let fromDate = new Date(today); // Copy of today
+
+    // Adjust fromDate based on selected time period
+    if (timePeriod === "weekly") {
+        fromDate.setDate(today.getDate() - 7);
+    } else if (timePeriod === "monthly") {
+        fromDate.setMonth(today.getMonth() - 1);
+    } else if (timePeriod === "yearly") {
+        fromDate.setFullYear(today.getFullYear() - 1);
+    }
+
+    // Format to yyyy-mm-dd
+    const formatDate = date => date.toISOString().split('T')[0];
+
+    $('#milkSupplyDateFrom').val(formatDate(fromDate));
+    $('#milkSupplyDateTo').val(formatDate(today));
+
+    fetchMilkSupplyCount(timePeriod); // Your existing function
+});
+
+
+  // ✅ Dropdown change: buyer category
+  $('#milkSupplyBuyerCategorySelect').on('change', function () {
+    fetchMilkSupplyCount($('#milkSupplyPeriodSelect').val());
+  });
+
+  // ✅ Manual date input change
+  $('#milkSupplyDateFrom, #milkSupplyDateTo').on('change', function () {
+    fetchMilkSupplyCount(null);
+  });
+
+  // ✅ Initial setup
+  setTodayAsDefaultMilkSupplyDateTo();
+  fetchMilkSupplyCount($('#milkSupplyPeriodSelect').val());
+});
+
+
+//payments
+$(document).ready(function () {
+
+  function setDefaultDateRange(callback) {
+    // Set 'from' to a very early date
+    $('#payment_date_from').val('2020-01-01');
+
+    // Set 'to' as today
+    const today = new Date().toISOString().split('T')[0];
+    $('#payment_date_to').val(today);
+
+    // Run fetchPayments after dates are set
+    if (typeof callback === 'function') {
+      callback();
+    }
+  }
+
+  function fetchPayments() {
+    const customFrom = $('#payment_date_from').val();
+    const customTo = $('#payment_date_to').val();
+    const selectedCategory = $('#category_dropdown').val();
+    const selectedPeriod = $('#period_dropdown').val();
+    const url = '/payments/list/';
+
+    // Use custom date if provided, else fallback to selected period
+    let dateRange = (customFrom && customTo)
+      ? { startDate: customFrom, endDate: customTo }
+      : getDateRange(selectedPeriod || 'all');
+
+    $.ajax({
+      url: url,
+      method: 'GET',
+      data: {
+        date_from: dateRange.startDate,
+        date_to: dateRange.endDate
+      },
+      success: function (response) {
+        const paymentRecords = response.results || [];
+
+        const filtered = paymentRecords.filter(item => {
+          const paymentDate = new Date(item.date_of_payment);
+          const from = new Date(dateRange.startDate);
+          const to = new Date(dateRange.endDate);
+          const matchesDate = paymentDate >= from && paymentDate <= to;
+          const matchesCategory = selectedCategory === "" || item.category_of_buyer === selectedCategory;
+          return matchesDate && matchesCategory;
+        });
+
+        const totalAmount = filtered.reduce((sum, item) => {
+          const amount = parseFloat((item.total_amount_to_receive || '0').toString().replace(/[^\d.]/g, ''));
+          return sum + amount;
+        }, 0);
+
+        $('#payment_total').html(`<h3>KSH ${totalAmount.toFixed(2)}</h3>`);
+        $('#payment_total_panel').html(`<h3>KSH ${totalAmount.toFixed(2)}</h3>`);
+      },
+      error: function (error) {
+        console.error('Error fetching payment data:', error);
+      }
+    });
+  }
+
+  function getDateRange(period) {
+    const today = new Date();
+    let startDate = new Date(today);
+    let endDate = new Date(today);
+
+    switch (period) {
+      case 'daily':
+        startDate.setDate(today.getDate() - 1);
+        break;
+      case 'weekly':
+        startDate.setDate(today.getDate() - 7);
+        break;
+      case 'monthly':
+        startDate.setMonth(today.getMonth() - 1);
+        break;
+      case '3months':
+        startDate.setMonth(today.getMonth() - 3);
+        break;
+      case '6months':
+        startDate.setMonth(today.getMonth() - 6);
+        break;
+      case 'yearly':
+        startDate.setFullYear(today.getFullYear() - 1);
+        break;
+      case 'all':
+      default:
+        startDate = new Date('2000-01-01');
+    }
+
+    return {
+      startDate: startDate.toISOString().split('T')[0],
+      endDate: endDate.toISOString().split('T')[0]
+    };
+  }
+
+  // Trigger fetch on input change
+  $('#category_dropdown, #period_dropdown, #payment_date_from, #payment_date_to').on('change', function () {
+    fetchPayments();
+  });
+
+  // Initial load
+  setDefaultDateRange(fetchPayments);
+
+});
+
+
+
+
+//milkrecords 
+$(document).ready(function () {
+    function setTodayAsDefaultDateTo() {
+        const today = new Date().toISOString().split('T')[0];
+        $('#milk_date_to').val(today);
+    }
+
+    function getDateRange(timePeriod) {
+        const today = new Date();
+        let startDate = new Date(today);
+        let endDate = new Date(today);
+
+        switch (timePeriod) {
+            case 'daily':
+                startDate.setDate(today.getDate() - 1);
+                break;
+            case 'weekly':
+                startDate.setDate(today.getDate() - 7);
+                break;
+            case 'monthly':
+                startDate.setMonth(today.getMonth() - 1);
+                break;
+        }
+
+        return {
+            startDate: startDate.toISOString().split('T')[0],
+            endDate: endDate.toISOString().split('T')[0]
+        };
+    }
+
+    function populateCowNameDropdownOnce(data) {
+        const cowOptions = new Set();
+        data.forEach(record => cowOptions.add(record.cow_name));
+
+        const dropdown = $('#cow_name_dropdown');
+        dropdown.empty();
+        dropdown.append(`<option value="">-- All Cows --</option>`);
+        cowOptions.forEach(value => {
+            dropdown.append(`<option value="${value}">${value}</option>`);
+        });
+    }
+
+    function fetchFilteredMilkData(populateDropdown = false) {
+        const cowName = $('#cow_name_dropdown').val();
+        const timeOfMilking = $('#time_dropdown').val();
+        const timePeriod = $('#timePeriodSelect').val();
+        const { startDate, endDate } = getDateRange(timePeriod);
+
+        $.ajax({
+            url: '/milk-records/',
+            method: 'GET',
+            data: {
+                date_from: startDate,
+                date_to: endDate
+                // Do not send cow_name or time_of_milking to backend,
+                // we filter them on frontend
+            },
+            success: function (response) {
+                const results = response.results || [];
+                let totalQuantity = 0;
+
+                results.forEach(record => {
+                    const matchCow = cowName === "" || record.cow_name === cowName;
+                    const matchTime = timeOfMilking === "" || record.time_of_milking === timeOfMilking;
+
+                    if (matchCow && matchTime) {
+                        totalQuantity += record.quantity || 0;
+                    }
+                });
+
+                $('#milk_output').html(`<h4>${totalQuantity} Litres</h4>`);
+                $('#milk_output_panel').html(`<h4>${totalQuantity} Litres</h4>`);
+
+                if (populateDropdown) {
+                    populateCowNameDropdownOnce(results);
+                }
+            },
+            error: function (error) {
+                console.error('Error fetching milk data:', error);
+            }
+        });
+    }
+
+    // Bind dropdown changes
+    $('#timePeriodSelect, #cow_name_dropdown, #time_dropdown').on('change', function () {
+        fetchFilteredMilkData(); // Do NOT repopulate dropdowns on filter change
+    });
+
+    setTodayAsDefaultDateTo();
+    fetchFilteredMilkData(true); // Initial load: populate cow dropdown
+});
+
+</script>
+
+</body>
+
+{% endblock %}
+
+
+
+
+

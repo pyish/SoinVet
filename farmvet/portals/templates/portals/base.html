@@ -1,0 +1,165 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'portals/assets/img/llogo.jpg' %}">
+  <link rel="icon" type="image/png" href="{% static 'portals/assets/img/llogo.jpg' %}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+   Soin Veterinary Services
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <script src="{% static 'portals/assets/js/core/jquery.min.js' %}"></script>
+  <!-- CSS Files -->
+  <link href="{% static 'portals/assets/css/bootstrap.min.css' %}" rel="stylesheet" />
+  
+  <link href="{% static 'portals/assets/css/calendar.css' %}" rel="stylesheet" />
+  <link href="{% static 'portals/assets/css/style.css' %}" rel="stylesheet" />
+  <link href="{% static 'portals/assets/css/modal.css' %}" rel="stylesheet" />
+  <link href="{% static 'portals/assets/css/now-ui-dashboard.css' %}" rel="stylesheet" />
+  <link rel="stylesheet" href="fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Theme style -->
+  <link href="{% static 'portals/assets/css/adminlte.css' %}" rel="stylesheet" />
+  <link href="{% static 'portals/assets/css/vanilla-calendar.min.css' %}" rel="stylesheet">
+  <link href="{% static 'portals/assets/css/clock.css' %}" rel="stylesheet">
+  
+ 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.css" rel="stylesheet">
+  <link href="{% static 'portals/assets/css/mdemo.css' %}" rel="stylesheet" />
+  <link href="{% static 'portals/assets/css/mstyle.css' %}" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+  
+<!-- Include Bootstrap CSS here -->
+
+<style>
+  .sidebar-dropdown > a,
+.sidebar-dropdown .sidebar-submenu a,
+.sidebar-dropdown .dropdown-item {
+  white-space: normal; /* Allow text to wrap */
+  word-wrap: break-word; /* Break long words if needed */
+}
+ </style>
+  
+</head>
+<body style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">
+  <style>
+    body{
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-y: auto;
+     font-size: 16px; /* Allow vertical scrollbar */
+}
+
+  </style>
+
+
+<div>
+  {% if messages %}
+      {% for message in messages %}
+      <div id="alertMessage" class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <script>
+        // Add JavaScript to close the alert after 5 seconds
+        window.onload = setTimeout(function() {
+          document.getElementById('alertMessage').classList.add('fade');
+        }, 5000);
+      </script>
+      {% endfor %}
+  {% endif %}
+</div>
+<!-- Error Modal -->
+<div class="modal fade" id="statusErrorsModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center p-lg-4">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2" aria-hidden="true">
+          <circle class="path circle" fill="none" stroke="#db3646" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+          <line class="path line" fill="none" stroke="#db3646" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3" />
+          <line class="path line" fill="none" stroke="#db3646" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2" /> 
+        </svg>
+        <h4 class="text-danger mt-3">Error</h4>
+        <div class="mt-3" id="errorModalBody"></div>
+        <button type="button" id="errorButton" class="btn btn-sm mt-3 btn-danger" data-bs-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="statusSuccessModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center p-lg-4">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2" aria-hidden="true">
+          <circle class="path circle" fill="none" stroke="#198754" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+          <polyline class="path check" fill="none" stroke="#198754" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " /> 
+        </svg> 
+        <h4 class="text-success mt-3">Success</h4>
+        <p class="mt-3">Details Submitted Successfully</p>
+        <button type="button" class="btn btn-sm mt-3 btn-success" data-bs-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Result Modal -->
+<div class="modal fade" id="result-modal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center p-lg-4">
+        <svg id="success-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2" style="display: none;">
+          <circle class="path circle" fill="none" stroke="#198754" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+          <polyline class="path check" fill="none" stroke="#198754" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " /> 
+        </svg> 
+        <svg id="failure-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2" style="display: none;">
+          <circle class="path circle" fill="none" stroke="#db3646" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />
+          <line class="path line" fill="none" stroke="#db3646" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3" />
+          <line class="path line" fill="none" stroke="#db3646" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2" />
+        </svg>
+        <h4 id="modal-title" class="text-danger mt-3">Error</h4>
+        <div class="mt-3" id="modal-text"></div>
+        <div class="d-flex justify-content-between mt-3">
+          <button type="button" id="retake-btn" class="btn btn-sm btn-success" data-bs-dismiss="modal">Retake</button>
+          <button type="button" id="view-results-btn" class="btn btn-sm btn-success" style="display: none;">View Results</button>
+          <button type="button" id="cancel-btn" class="btn btn-sm btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<!-- Photo View Modal -->
+<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="photoModalLabel">View Photo</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body text-center">
+              <img id="photoPreview" src="" class="img-fluid" alt="Photo Preview">
+          </div>
+      </div>
+  </div>
+</div>
+<script>
+$(document).on("click", "[data-target='#photoModal']", function () {
+  var imageUrl = $(this).data("src");
+  $("#photoPreview").attr("src", imageUrl);
+});
+</script>
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

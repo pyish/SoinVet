@@ -1,0 +1,66 @@
+{% load static %}
+<header id="header">
+  <div class="container d-flex align-items-center">
+
+    <div class="logo d-flex align-items-center">
+      <!-- Logo Image -->
+      <a href="{% url 'index' %}">
+        <img src="{% static 'vet/assets/img/llogo2.png' %}" alt="Logo" style="height: 50px;  margin-right: 10px; border-radius:50px;">
+      </a>
+      <!-- Logo Text -->
+      <h1 class="text-light mb-0">
+        <a href="{% url 'index' %}"> <span style="font-size: 27px;">SOIN VETERINARY</span></a>
+      </h1>
+    </div>
+
+    <nav class="nav-menu d-none d-lg-block ml-auto">
+      <ul>
+        <li class="active"><a href="{% url 'index' %}">Home</a></li>
+
+        <li class="drop-down"><a href="#">About</a>
+          <ul>
+            <li><a href="{% url 'about' %}">About Us</a></li>
+            <li><a href="{% url 'team' %}">Our Team</a></li>
+          </ul>
+        </li>
+
+        
+            <li><a href="{% url 'services' %}">Services</a></li>
+          
+        </li>
+        {% if not user.is_authenticated %}
+          <li class="drop-down"><a href="#">Accounts</a>
+            <ul>
+              <li><a href="{% url 'vet-login' %}">Vet Practitioner Login</a></li>
+              <li><a href="{% url 'farmer-login' %}">Farmer Login</a></li>
+              <li><a href="{% url 'cooperative-login' %}">Dairy Cooperative Login</a></li>
+              <li><a href="{% url 'official-login' %}">County Vet Login</a></li>
+             
+            </ul>
+          </li>
+        {% else %}
+          <li class="drop-down"><a href="#">{{ user.username }}</a>
+            <ul>
+              {% if user.is_vet_officer %}
+                <li><a href="{% url 'vet-portal' %}">My Dashboard</a></li>
+              {% elif user.is_farmer %}
+                <li><a href="{% url 'farmer-portal' %}">My Dashboard</a></li>
+              {% elif user.is_official %}
+                <li><a href="{% url 'official-portal' %}">My Dashboard</a></li>
+                {% elif user.is_cooperative %}
+                <li><a href="{% url 'cooperative-portal' %}">My Dashboard</a></li>
+              {% elif user.is_superuser %}
+                <li><a href="/admin">Admin Dashboard</a></li>
+              {% endif %}
+              <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+          </li>
+        {% endif %}
+        <li><a href="{% url 'blog' %}">Our Partners</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+      </ul>
+    </nav><!-- .nav-menu -->
+
+  </div>
+  
+</header><!-- End Header -->

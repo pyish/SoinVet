@@ -1,0 +1,42 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrahead %}
+    <!-- Bootstrap 4 CSS -->
+    <link 
+        rel="stylesheet" 
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+        integrity="sha384-M3bJr20tfQ0d+3tI6v8AHe9Lk9ZtqPZf6I1j27xktps1X6EbR1G1m6LZr9zxU0j7" 
+        crossorigin="anonymous"
+    >
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Schedule Zoom Meeting</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Topic:</label>
+            <input type="text" name="topic" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label>Start Time:</label>
+            <input type="datetime-local" name="start_time" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label>Facilitator:</label>
+            <input type="text" name="facilitator" class="form-control" value="{{ request.user.get_full_name }}">
+        </div>
+
+        <div class="form-group">
+            <label>Price:</label>
+            <input type="number" step="0.01" name="price" class="form-control" value="0.00">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Meeting</button>
+    </form>
+</div>
+{% endblock %}

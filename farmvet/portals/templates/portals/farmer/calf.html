@@ -1,0 +1,1055 @@
+
+{% extends 'portals/base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'portals/sidebarFarmer.html' %}
+<main class="page-content">
+<div class="container-fluid">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+   
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#pablo">
+                  <i class="now-ui-icons media-2_sound-wave"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Stats</span>
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="now-ui-icons location_world"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Some Actions</span>
+                  </p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Account Management</a>
+                  <a class="dropdown-item" href="#">Profile picture</a>
+                  <a class="dropdown-item" href="#">Change Password</a>
+                  <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#pablo">
+                  <i class="now-ui-icons users_single-02"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Account</span>
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="panel-header panel-header-lg">
+        <canvas id="bigDashboardChart"></canvas>
+      </div>
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+<h4 class="">Calf Records</h4>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="px-5 my-1 text-center">
+    </div>
+   
+   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#calfAddModal">
+    Add Record
+    </button>
+     <!-- form modal -->
+     <div class="modal fade" id="calfAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add</h5>
+            <button type="button" class="close" id="canceless" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form id="calfAddForm" class="form-group">
+                {% csrf_token %}
+                <input type="hidden" id="pk" name="id">
+                <div class="mb-3">
+                  <label for="name_given" class="form-label">Given Name</label>
+                  <input type="text" class="form-control editable-field" id="name_given" name="name_given">
+                  <div class="invalid-feedback">Please provide a valid name.</div>
+              </div>
+              <div class="mb-3">
+                <label for="registration_number" class="form-label">Registration Number</label>
+                <input type="text" class="form-control editable-field" id="registration_number" name="registration_number">
+                <div class="invalid-feedback">Please provide a valid registration number.</div>
+            </div>
+              <div class="mb-3">
+                <label for="dam_details" class="form-label">Dam Details</label>
+                <input type="text" class="form-control editable-field" id="dam_details" name="dam_details">
+                <div class="invalid-feedback">Please provide a valid name.</div>
+            </div>
+      
+              <div class="mb-3">
+                  <label for="birth_date" class="form-label">Birth Date</label>
+                  <input type="date" class="form-control editable-field" id="birth_date" name="birth_date">
+                  <div class="invalid-feedback">Please provide a valid birth date.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="breed" class="form-label">Breed</label>
+                  <select class="form-control editable-field" id="breed" name="breed">
+                      <optgroup label="Cattle" aria-selected="">
+                        <option value="Angus">Angus</option>
+                        <option value="Friesian">Friesian</option>
+                        <option value="Ayrshire">Ayrshire</option>
+                        <option value="Hereford">Hereford</option>
+                        <option value="Charolais">Charolais</option>
+                        <option value="Simmental">Simmental</option>
+                        <option value="Limousin">Limousin</option>
+                        <option value="Texas Longhorn">Texas Longhorn</option>
+                        <option value="Holstein">Holstein</option>
+                        <option value="Jersey">Jersey</option>
+                        <option value="Gelbvieh">Gelbvieh</option>
+                        <option value="Brahman">Brahman</option>
+                    </optgroup>
+                    <optgroup label="Sheep">
+                        <option value="Merino">Merino</option>
+                        <option value="Dorper">Dorper</option>
+                        <option value="Suffolk">Suffolk</option>
+                        <option value="Rambouillet">Rambouillet</option>
+                        <option value="Hampshire">Hampshire</option>
+                        <option value="Shropshire">Shropshire</option>
+                        <option value="Dorset">Dorset</option>
+                        <option value="Cotswold">Cotswold</option>
+                        <option value="Lincoln">Lincoln</option>
+                        <option value="Targhee">Targhee</option>
+                    </optgroup>
+                    <optgroup label="Goat">
+                        <option value="Boer">Boer</option>
+                        <option value="Nubian">Nubian</option>
+                        <option value="Saanen">Saanen</option>
+                        <option value="Angora">Angora</option>
+                        <option value="LaMancha">LaMancha</option>
+                        <option value="Alpine">Alpine</option>
+                        <option value="Toggenburg">Toggenburg</option>
+                        <option value="Kiko">Kiko</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="Pygmy">Pygmy</option>
+                    </optgroup>     
+                      <optgroup label="Dog" >
+                        <option value="Labrador Retriever">Labrador Retriever</option>
+                        <option value="German Shepherd">German Shepherd</option>
+                        <option value="Golden Retriever">Golden Retriever</option>
+                        <option value="Bulldog">Bulldog</option>
+                        <option value="Beagle">Beagle</option>
+                        <option value="Poodle">Poodle</option>
+                        <option value="Boxer">Boxer</option>
+                        <option value="Dachshund">Dachshund</option>
+                        <option value="Yorkshire Terrier">Yorkshire Terrier</option>
+                        <option value="Rottweiler">Rottweiler</option>
+                    </optgroup>
+                    <optgroup label="Cat">
+                        <option value="Siamese">Siamese</option>
+                        <option value="Persian">Persian</option>
+                        <option value="Maine Coon">Maine Coon</option>
+                        <option value="Ragdoll">Ragdoll</option>
+                        <option value="British Shorthair">British Shorthair</option>
+                        <option value="Sphynx">Sphynx</option>
+                        <option value="Bengal">Bengal</option>
+                        <option value="Abyssinian">Abyssinian</option>
+                        <option value="Scottish Fold">Scottish Fold</option>
+                        <option value="Burmese">Burmese</option>
+                    </optgroup>
+                    <optgroup label="Horse">
+                        <option value="Thoroughbred">Thoroughbred</option>
+                        <option value="Quarter Horse">Quarter Horse</option>
+                        <option value="Arabian">Arabian</option>
+                        <option value="Appaloosa">Appaloosa</option>
+                        <option value="Paint Horse">Paint Horse</option>
+                        <option value="Morgan">Morgan</option>
+                        <option value="Tennessee Walking Horse">Tennessee Walking Horse</option>
+                        <option value="Friesian">Friesian</option>
+                        <option value="Pony of the Americas">Pony of the Americas</option>
+                        <option value="Miniature Horse">Miniature Horse</option>
+                    </optgroup>
+                    
+  
+                    </select>
+                    </select>
+                  <div class="invalid-feedback">Please provide a valid breed.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="gender" class="form-label">Gender</label>
+                  <select class="form-control editable-field" id="gender" name="gender">
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                  </select>
+                  <div class="invalid-feedback">Please select a valid gender.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="sire_details" class="form-label">Sire details</label>
+                  <input type="text" class="form-control editable-field" id="sire_details" name="sire_details">
+                  <div class="invalid-feedback">Please provide valid sire details.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="color" class="form-label">Color</label>
+                  <input type="text" class="form-control editable-field" id="color" name="color">
+                  <div class="invalid-feedback">Please provide a valid color.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="birth_weight" class="form-label">Birth Weight</label>
+                  <input type="number" step="0.01" class="form-control editable-field" id="birth_weight" name="birth_weight">
+                  <div class="invalid-feedback">Please provide a valid birth weight.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="medical_conditions" class="form-label">Medical Conditions</label>
+                  <input type="text" class="form-control editable-field" id="medical_conditions" name="medical_conditions">
+                  <div class="invalid-feedback">Please provide valid medical conditions.</div>
+              </div>
+      
+             
+      
+              <div class="mb-3">
+                  <label for="registration_date" class="form-label">Registration Date</label>
+                  <input type="date" class="form-control editable-field" id="registration_date" name="registration_date">
+                  <div class="invalid-feedback">Please provide a valid registration date.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="expected_weaning" class="form-label">Expected Weaning</label>
+                  <input type="date" class="form-control editable-field" id="expected_weaning" name="expected_weaning">
+                  <div class="invalid-feedback">Please provide a valid expected weaning date.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="breeding_level" class="form-label">Breeding Level</label>
+                  <select class="form-control editable-field" id="breeding_level" name="breeding_level">
+                      <option value="Purebred">Purebred</option>
+                      <option value="Crossbred">Crossbred</option>
+                      <option value="Mixed Breed">Mixed Breed</option>
+                  </select>
+                  <div class="invalid-feedback">Please select a valid breeding level.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="comments" class="form-label">Comments</label>
+                  <input type="text" class="form-control editable-field" id="comments" name="comments">
+                  <div class="invalid-feedback">Please provide valid comments.</div>
+              </div>
+                <div class="modal-footer">
+                  <button type="button"  class="btn btn-secondary" id="cancel" data-dismiss="modal">Cancel</button>
+                  <button type="submit" id=""    class="btn btn-primary">Save</button>
+              </div>
+          </div>
+         
+           </form>
+        </div>
+      </div>
+    </div>
+    <!-- form modal end -->
+    <!--edit Modal  -->
+     <!-- form modal -->
+     <div class="modal fade" id="calfEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Record</h5>
+            <button type="button" id="cancel" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form id="calfEditForm" class="form-group">
+                {% csrf_token %}
+                <input type="hidden" id="id" name="id">
+                <div class="mb-3">
+                  <label for="name_given" class="form-label">Given Name</label>
+                  <input type="text" class="form-control editable-field" id="name_given" name="name_given">
+                  <div class="invalid-feedback">Please provide a valid name.</div>
+              </div>
+              <div class="mb-3">
+                <label for="registration_number" class="form-label">Registration Number</label>
+                <input type="text" class="form-control editable-field" id="registration_number" name="registration_number">
+                <div class="invalid-feedback">Please provide a valid registration number.</div>
+            </div>
+              <div class="mb-3">
+                <label for="dam_details" class="form-label">Dam Details</label>
+                <input type="text" class="form-control editable-field" id="dam_details" name="dam_details">
+                <div class="invalid-feedback">Please provide a valid name.</div>
+            </div>
+    
+      
+              <div class="mb-3">
+                  <label for="birth_date" class="form-label">Birth Date</label>
+                  <input type="date" class="form-control editable-field" id="birth_date" name="birth_date">
+                  <div class="invalid-feedback">Please provide a valid birth date.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="breed" class="form-label">Breed</label>
+                    <select id="id_breed" name="breed" class="form-control editable-field">
+                      <optgroup label="Cattle" aria-selected="">
+                        <option value="Angus">Angus</option>
+                        <option value="Friesian">Friesian</option>
+                        <option value="Ayrshire">Ayrshire</option>
+                        <option value="Hereford">Hereford</option>
+                        <option value="Charolais">Charolais</option>
+                        <option value="Simmental">Simmental</option>
+                        <option value="Limousin">Limousin</option>
+                        <option value="Texas Longhorn">Texas Longhorn</option>
+                        <option value="Holstein">Holstein</option>
+                        <option value="Jersey">Jersey</option>
+                        <option value="Gelbvieh">Gelbvieh</option>
+                        <option value="Brahman">Brahman</option>
+                    </optgroup>
+                    <optgroup label="Sheep">
+                        <option value="Merino">Merino</option>
+                        <option value="Dorper">Dorper</option>
+                        <option value="Suffolk">Suffolk</option>
+                        <option value="Rambouillet">Rambouillet</option>
+                        <option value="Hampshire">Hampshire</option>
+                        <option value="Shropshire">Shropshire</option>
+                        <option value="Dorset">Dorset</option>
+                        <option value="Cotswold">Cotswold</option>
+                        <option value="Lincoln">Lincoln</option>
+                        <option value="Targhee">Targhee</option>
+                    </optgroup>
+                    <optgroup label="Goat">
+                        <option value="Boer">Boer</option>
+                        <option value="Nubian">Nubian</option>
+                        <option value="Saanen">Saanen</option>
+                        <option value="Angora">Angora</option>
+                        <option value="LaMancha">LaMancha</option>
+                        <option value="Alpine">Alpine</option>
+                        <option value="Toggenburg">Toggenburg</option>
+                        <option value="Kiko">Kiko</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="Pygmy">Pygmy</option>
+                    </optgroup>     
+                      <optgroup label="Dog" >
+                        <option value="Labrador Retriever">Labrador Retriever</option>
+                        <option value="German Shepherd">German Shepherd</option>
+                        <option value="Golden Retriever">Golden Retriever</option>
+                        <option value="Bulldog">Bulldog</option>
+                        <option value="Beagle">Beagle</option>
+                        <option value="Poodle">Poodle</option>
+                        <option value="Boxer">Boxer</option>
+                        <option value="Dachshund">Dachshund</option>
+                        <option value="Yorkshire Terrier">Yorkshire Terrier</option>
+                        <option value="Rottweiler">Rottweiler</option>
+                    </optgroup>
+                    <optgroup label="Cat">
+                        <option value="Siamese">Siamese</option>
+                        <option value="Persian">Persian</option>
+                        <option value="Maine Coon">Maine Coon</option>
+                        <option value="Ragdoll">Ragdoll</option>
+                        <option value="British Shorthair">British Shorthair</option>
+                        <option value="Sphynx">Sphynx</option>
+                        <option value="Bengal">Bengal</option>
+                        <option value="Abyssinian">Abyssinian</option>
+                        <option value="Scottish Fold">Scottish Fold</option>
+                        <option value="Burmese">Burmese</option>
+                    </optgroup>
+                    <optgroup label="Horse">
+                        <option value="Thoroughbred">Thoroughbred</option>
+                        <option value="Quarter Horse">Quarter Horse</option>
+                        <option value="Arabian">Arabian</option>
+                        <option value="Appaloosa">Appaloosa</option>
+                        <option value="Paint Horse">Paint Horse</option>
+                        <option value="Morgan">Morgan</option>
+                        <option value="Tennessee Walking Horse">Tennessee Walking Horse</option>
+                        <option value="Friesian">Friesian</option>
+                        <option value="Pony of the Americas">Pony of the Americas</option>
+                        <option value="Miniature Horse">Miniature Horse</option>
+                    </optgroup>
+                    
+  
+                    </select>
+                    </select>
+                  <div class="invalid-feedback">Please provide a valid breed.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="gender" class="form-label">Gender</label>
+                  <select class="form-control editable-field" id="gender" name="gender">
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                  </select>
+                  <div class="invalid-feedback">Please select a valid gender.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="sire_details" class="form-label">Sire details</label>
+                  <input type="text" class="form-control editable-field" id="sire_details" name="sire_details">
+                  <div class="invalid-feedback">Please provide valid sire details.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="color" class="form-label">Color</label>
+                  <input type="text" class="form-control editable-field" id="color" name="color">
+                  <div class="invalid-feedback">Please provide a valid color.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="birth_weight" class="form-label">Birth Weight</label>
+                  <input type="number" step="0.01" class="form-control editable-field" id="birth_weight" name="birth_weight">
+                  <div class="invalid-feedback">Please provide a valid birth weight.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="medical_conditions" class="form-label">Medical Conditions</label>
+                  <input type="text" class="form-control editable-field" id="medical_conditions" name="medical_conditions">
+                  <div class="invalid-feedback">Please provide valid medical conditions.</div>
+              </div>
+      
+             
+      
+              <div class="mb-3">
+                  <label for="registration_date" class="form-label">Registration Date</label>
+                  <input type="date" class="form-control editable-field" id="registration_date" name="registration_date">
+                  <div class="invalid-feedback">Please provide a valid registration date.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="expected_weaning" class="form-label">Expected Weaning</label>
+                  <input type="date" class="form-control editable-field" id="expected_weaning" name="expected_weaning">
+                  <div class="invalid-feedback">Please provide a valid expected weaning date.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="breeding_level" class="form-label">Breeding Level</label>
+                  <select class="form-control editable-field" id="breeding_level" name="breeding_level">
+                      <option value="Purebred">Purebred</option>
+                      <option value="Crossbred">Crossbred</option>
+                      <option value="Mixed Breed">Mixed Breed</option>
+                  </select>
+                  <div class="invalid-feedback">Please select a valid breeding level.</div>
+              </div>
+      
+              <div class="mb-3">
+                  <label for="comments" class="form-label">Comments</label>
+                  <input type="text" class="form-control editable-field" id="comments" name="comments">
+                  <div class="invalid-feedback">Please provide valid comments.</div>
+              </div>
+                <div class="modal-footer">
+                  <button type="button" id="canceless"  class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <button type="" id="submitcalf"    class="btn btn-primary">Save</button>
+              </div>
+          </div>
+         
+           </form>
+        </div>
+      </div>
+    </div>
+    <!-- edit modal end -->
+    
+    <!-- Display Modal  Modal -->
+    <div class="modal fade" id="dsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" id="invoice">
+          <h2 class="text-center text-uppercase">{{request.user.farm_name}}</h2>       <h3 class="text-center">Calves Records </h3>
+          <div class="modal-body" id="modalBody">
+          </div>
+          <div class="modal-footer" id="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closeModalBtn1">Close</button>
+            <button type="button" id="download" class="btn btn-primary">Download Pdf</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /. Display  modal -->
+<!-- sucess Modal -->
+
+<!-- sucess Modal End -->
+
+
+    
+    <style>
+      /* .select,
+      #locale {
+        width: 100%;
+      }
+      .like {
+        margin-right: 10px;
+      }
+      .mytable th{
+        font-size: 6px;
+
+      } */
+    </style>
+     <!-- Placeholder for the modal -->
+
+    <div id="toolbar">
+      <h5 class="text-danger">Click the plus sign To view More</h5>
+    </div>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        font-size: medium;
+      }
+      </style>
+      <div class="select" hidden>
+        <select class="form-control" id="locale">
+          <option value="en-" selected>en-US</option>
+        </select>
+      </div>
+      
+    <table
+      id="table"
+      class="table"
+      data-search="false"
+      data-show-refresh="true"
+      data-show-toggle="true"   
+      data-show-fullscreen="true"
+      data-show-columns="true"
+      data-show-columns-toggle-all="true"
+      data-detail-view="true"
+      data-show-export="false"
+      data-click-to-select="true"
+      data-detail-formatter="detailFormatter"
+      data-minimum-count-columns="15"
+      data-show-pagination-switch="true"
+      data-pagination="true"
+      data-id-field="id"
+      data-page-list="[10, 25, 50, 100, all]"
+      data-show-footer="true"
+      data-side-pagination="server"
+      data-url="{% url 'calves-list' %}"
+      data-response-handler="responseHandler">
+    </table>
+    <script>
+
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+
+      var $table = $('#table')
+      var $remove = $('#remove')
+      var selections = []
+    
+      function getIdSelections() {
+        return $.map($table.bootstrapTable('getSelections'), function (row) {
+          return row.id
+        })
+      }
+    
+      function responseHandler(res) {
+        return {
+                total: res.count,
+                rows: res.results
+            };
+      }
+
+      function detailFormatter(index, row) {
+    var html = '<table class="table">';
+    var columns = $('#table').bootstrapTable('getOptions').columns[0]; 
+    
+    // Create table rows
+    $.each(columns, function (index, column) {
+        if (column.field !== 'state' && column.field !== 'operate') {
+            html += '<tr>';
+            html += '<td><b>' + column.title + '</b></td>'; 
+            var key = column.field;
+            var value = row[key];
+            
+            // Check if the value is a valid date and format it
+            if (moment(value, moment.ISO_8601, true).isValid()) {
+                value = moment(value).format('DD-MM-YYYY');
+            }
+
+            html += '<td>' + value + '</td>'; 
+            html += '</tr>';
+        }
+    });
+
+    html += '</table>';
+    
+
+    
+    
+   
+    $('#modalBody').html(html);
+    
+    
+    $('#dsModal').modal('show');
+
+    
+    $('#closeModalBtn').on('click', function() {
+        $('#dsModal').modal('hide');
+    });
+    $('#closeModalBtn1').on('click', function() {
+        $('#dsModal').modal('hide');
+    });
+}
+$('#calfAddForm').submit(function(e) {
+  e.preventDefault();
+  var formData = new FormData(this);
+  var jsonObject = {};
+  formData.forEach(function(value, key) {
+      jsonObject[key] = value;
+  });
+  var IdNo = $('#registration_number').val();
+
+  var csrftoken = getCookie('csrftoken');
+
+  $.ajax({
+    method: 'POST',
+    url: "/calves/create/",
+    data: JSON.stringify(jsonObject),
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader('X-CSRFToken', csrftoken);
+      xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+    }
+  }).done(function(data) {
+    console.log('POST response data:', data);
+    $('#calfAddModal').modal('hide');
+    $('#statusSuccessModal').modal('show');
+    setTimeout(function() {
+      window.location.reload();
+    }, 1000);
+  }).fail(function(xhr, textStatus, errorThrown) {
+    $('#calfAddModal').modal('hide');
+    if (xhr.status === 400) {
+      var errors = JSON.parse(xhr.responseText);
+      if (errors.registration_number) {
+        errorMessage = errors.registration_number;
+      } else {
+        errorMessage = xhr.responseText;
+      }
+    } else {
+      errorMessage = xhr.responseText;
+    }
+    console.error('Error submitting form:', errorMessage);
+    $('#errorModalBody').html('<p>' + errorMessage + '</p>');
+    $('#statusErrorsModal').modal('show');
+    $('#errorButton').click(function() {
+      setTimeout(function() {
+        window.location.reload();
+      }, 5);  
+    });
+  });
+});
+     function operateFormatter(value, row, index) {
+        return [
+          '<div class="btn-group" role="group" aria-label="Actions">',
+          '<a class="btn btn-warning btn-sm edit" id="edit" href="javascript:void(0)" title="Edit">',
+              '<i class="fa fa-edit"></i> Edit',
+          '</a>',
+          '<a class="btn btn-danger btn-sm remove" href="javascript:void(0)" title="Remove">',
+              '<i class="fa fa-trash"></i> Delete',
+          '</a>',
+      '</div>'
+          
+        ].join('')
+      }
+
+     
+      window.operateEvents = {
+        'click .edit': function(e, value, row, index) {
+    // Fetch the ID from the row data (assuming 'id' is a property in your data)
+    const objectId = row.id;
+    console.log(objectId)
+
+    // Check if ID is available before proceeding
+    if (!objectId) {
+      console.error('Error: Missing ID in row data');
+      return;
+    }
+
+    $('#calfEditModal').modal('show');
+
+    // Populate form fields after the modal is shown (ensures elements exist)
+    $('#calfEditModal').on('shown.bs.modal', function () {
+      const formFields = $('#calfEditModal .editable-field');
+
+      formFields.each(function(i, field) {
+    const fieldName = $(field).attr('name');
+    const fieldValue = row[fieldName];
+
+    if ($(field).is('select')) {
+        
+        $(field).val(fieldValue || ''); 
+    } else {
+
+        $(field).val(fieldValue || ''); 
+    }
+});
+    });
+
+    $('#cancel').click(function() {
+      $('#calfEditModal').modal('hide');
+    });
+    $('#canceless').click(function() {
+      $('#calfEditModal').modal('hide');
+    });
+
+    e.preventDefault();
+
+    
+    $('#submitcalf').on('click', function () {
+  const formFields = $('#calfEditModal .editable-field');
+
+  formFields.each(function (i, field) {
+    const fieldName = $(field).attr('name');
+    const fieldValue = $(field).val();
+
+    row[fieldName] = fieldValue; 
+  });
+   
+  fetch(`/calves/update/${row.id}/`, {
+    method: 'PATCH',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+    },
+    body: JSON.stringify(row)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+    
+    window.location.reload()
+   
+      
+})
+.then(data=>{
+  $('#successModal').modal('show');
+
+})
+.catch(error => console.error('Error:', error));
+});
+
+  },
+        'click .remove': function (e, value, row, index) {
+    // Send an AJAX request to the Django backend to delete the record
+    $.ajax({
+        url: `/calves/delete/${row.id}/`, // Replace with the appropriate URL
+        type: 'DELETE',
+        headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+    }, // Include CSRF token if required
+        success: function () {
+          
+            // If deletion is successful, remove the row from the Bootstrap Table
+            $table.bootstrapTable('remove', {
+                row: 'id',
+                values: [row.id]
+            });
+            window.location.reload();
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            // Handle errors, if any
+            console.error('Error deleting record:', errorThrown);
+            // Optionally, you can display error messages or handle UI updates here
+        }
+    });
+
+}
+      }
+    
+      function totalTextFormatter(data) {
+        return 'Total'
+      }
+    
+      function totalNameFormatter(data) {
+        return data.length
+      }
+    
+      function totalPriceFormatter(data) {
+        var field = this.field
+        return '$' + data.map(function (row) {
+          return +row[field].substring(1)
+        }).reduce(function (sum, i) {
+          return sum + i
+        }, 0)
+      }
+      
+    
+      function initTable() {
+      // Process the fetched data and initialize Bootstrap Table
+    $table.bootstrapTable('destroy').bootstrapTable({
+      height: 550,
+      locale: $('#locale').val(),
+      columns: [
+        [
+          {
+            field: 'state',
+            checkbox: true,
+            rowspan: 2,
+            align: 'center',
+            valign: 'middle'
+          },
+          // {
+          //   title: 'No',
+          //   field: 'id',
+          //   rowspan: 2,
+          //   align: 'center',
+          //   valign: 'middle',
+          //   sortable: true,
+            
+          // },
+          {
+    field: 'name_given',
+    title: 'Given Name',
+    label: 'Given Name',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'dam_details',
+    title: 'Dam Details',
+    label: 'Dam Details',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'birth_date',
+    title: 'Birth Date',
+    label: 'Birth Date',
+    sortable: true,
+    align: 'center',
+    formatter: function (value, row) {
+                return moment(value).format('DD-MM-YYYY'); 
+            }
+  },
+  {
+    field: 'breed',
+    title: 'Breed',
+    label: 'Breed',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'gender',
+    title: 'Gender',
+    label: 'Gender',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'sire_details',
+    title: 'Sire Details',
+    label: 'Sire Details',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'color',
+    title: 'Color',
+    label: 'Color',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'birth_weight',
+    title: 'Birth Weight',
+    label: 'Birth Weight',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'medical_conditions',
+    title: 'Medical Conditions',
+    label: 'Medical Conditions',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'registration_number',
+    title: 'Registration Number',
+    label: 'Registration Number',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'registration_date',
+    title: 'Registration Date',
+    label: 'Registration Date',
+    sortable: true,
+    align: 'center',
+    formatter: function (value, row) {
+                return moment(value).format('DD-MM-YYYY'); 
+            }
+  },
+  {
+    field: 'expected_weaning',
+    title: 'Expected Weaning',
+    label: 'Expected Weaning',
+    sortable: true,
+    align: 'center',
+    formatter: function (value, row) {
+                return moment(value).format('DD-MM-YYYY'); 
+            }
+  },
+  {
+    field: 'breeding_level',
+    title: 'Breeding Level',
+    label: 'Breeding Level',
+    sortable: true,
+    align: 'center'
+  },
+  {
+    field: 'comments',
+    title: 'Comments',
+    label: 'Comments',
+    sortable: true,
+    align: 'center'
+  },
+         
+          {
+            field: 'operate',
+            title: 'Item Operate',
+            align: 'center',
+            clickToSelect: false,
+            events: window.operateEvents,
+            formatter: operateFormatter
+          }
+        ],
+        [
+        ]
+      ]
+    })
+    $table.on('check.bs.table uncheck.bs.table ' +
+      'check-all.bs.table uncheck-all.bs.table',
+    function () {
+      $remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+      // save your data, here just save the current page
+      selections = getIdSelections()
+      // push or splice the selections if you want to save all data selections
+    })
+    $table.on('all.bs.table', function (e, name, args) {
+      
+    })
+    $remove.click(function () {
+      var ids = getIdSelections()
+      $table.bootstrapTable('remove', {
+        field: 'id',
+        values: ids
+      })
+      $remove.prop('disabled', true)
+    })
+  }
+
+  $(function() {
+    initTable()
+
+    $('#locale').change(initTable)
+  })
+    </script>
+  
+  <script>
+    window.onload = function () {
+        document.getElementById("download")
+            .addEventListener("click", () => {
+                const invoice = document.getElementById("invoice");
+                console.log(invoice);
+                console.log(window);
+                var opt = {
+                    margin: 1,
+                    filename: 'farmer records.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+              
+                document.getElementById("modal-footer").style.display = "none";
+               // document.getElementById("closeModalBtn").style.display = "none";
+
+                html2pdf().from(invoice).set(opt).save().then(() => {
+                    
+                    window.location.reload();
+                });
+                
+                
+                document.getElementById("modal-footer").style.display = "none";
+            });
+    }
+</script>
+
+
+    
+<!-- Placeholder for the modal -->  
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.28.0/tableExport.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table-locale-all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/extensions/export/bootstrap-table-export.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+
+  <script src="{% static 'portals/assets/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'portals/assets/js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'portals/assets/js/main.js' %}"></script>
+  <script src="{% static 'portals/assets/js/scripts.js' %}"></script>
+  
+  
+  
+</div>
+<!-- /.row (main row) -->
+</div><!-- /.container-fluid -->
+<!-- end  of template -->
+             
+      <footer class="footer">
+        <div class=" container-fluid ">
+            <div class="copyright">
+              &copy; Copyright <strong><span>SoinVet</span></strong>. All Rights Reserved
+              <div class="credits">
+              
+            </div>
+          </div>
+        </footer><!-- End Footer -->
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </main>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

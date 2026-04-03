@@ -1,0 +1,664 @@
+{% load static %}
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+ 
+
+<div class="page-wrapper chiller-theme ">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+      <div class="sidebar-brand">
+        <a href="{% url 'farmer-portal' %}">Farmer Dashboard</a>
+        <div id="close-sidebar">
+          <i class="fas fa-times fa-lg"></i>
+        </div>
+      </div>
+      <div class="sidebar-header">
+        <div class="user-pic">
+          <img class="img-responsive img-rounded" src="{% static 'portals/assets/img/user.png' %}"
+            alt="User picture">
+        </div>
+        <div class="user-info">
+          <span class="user-name">
+            <strong>{{request.user}}</strong>
+          </span>
+          <span class="user-role">Farmer</span>
+          <span class="user-status">
+            <i class="fa fa-circle"></i>
+            <span>Online</span>
+          </span>
+        </div>
+      </div>
+      <!-- sidebar-header  -->
+      <!-- sidebar-search  -->
+      <div class="sidebar-menu">
+        <ul>
+          <li class="header-menu">
+            <span>General</span>
+          </li>
+         
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fas fa-list"></i>
+              <span>Livestock Records</span>
+            </a>
+            <div class="sidebar-submenu">
+            
+
+              <ul>
+                <li class="sidebar-dropdown">
+                  <a href="#" style="font-weight: bold;">
+                    
+                    <span >Dairy Production</span>
+                    
+                  </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                      <li>
+                        <a class="dropdown-item" style="font-weight: bold;" href="{% url 'calving-record' %}">Calving</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" style="font-weight: bold;" href="{% url 'calf' %}">Calf Registration</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" style="font-weight: bold;" href="{% url 'new_animal' %}">Register new animal</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" style="font-weight: bold;" href="{% url 'livestock' %}">Livestock Inventory Form</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" style="font-weight: bold;" href="{% url 'culling' %}">Culling</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" style="font-weight: bold;" href="{% url 'dead_animal' %}">Dead Animal Registration </a>
+                        </a>
+                      <li/> 
+                      <li class="sidebar-dropdown">
+                        <a href="#">
+                          
+                          <span style="font-weight: bold;">Approved Dairy Farms</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                          <ul>
+                            <li>
+                              <a style="font-weight: bold;" href="{% url 'approved-dairy-farms' %}">Approved Farms</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li class="sidebar-dropdown">
+                        <a href="#">
+                          
+                          <span style="font-weight: bold;">Milk records</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                          <ul>
+                            <li>
+                              <a style="font-weight: bold;" href="{% url 'lactation' %}">Lactating Cows</a>
+                            </li>
+                            <li>
+                              <a style="font-weight: bold;" href="{% url 'milk-record' %}">Daily Milk Records</a>
+                            </li>
+                            <li>
+                              <a style="font-weight: bold;" href="{% url 'weekly-record' %}">Weekly Milk Records</a>
+                            </li>
+                            <li>
+                              <a style="font-weight: bold;" href="{% url 'monthly-record' %}">Monthly Milk Records</a>
+                            </li>
+                           
+                          </ul>
+                        </div>
+                      </li> 
+                      <li class="sidebar-dropdown">
+                        <a href="#">
+                         
+                          <span style="font-weight: bold;">Monitoring</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                          <ul>
+                            <li>
+                              <a style="font-weight: bold;" href="{% url 'daily-checks' %}">Daily Checks</a>
+                            </li>
+                            <li>
+                              <a style="font-weight: bold;" href="{% url 'heat_sign_monitoring' %}">Heat Signs Monitoring</a>
+                            </li>
+                            <li>
+                              <a style="font-weight: bold;" href="{% url 'pregnancy_monitoring' %}">Pregnancy Monitoring</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>
+                </li>
+                <ul>
+                  <li class="sidebar-dropdown">
+                    <a href="#" style="font-weight: bold;">
+                      <span >Beef Production</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        <li>
+                          <a class="dropdown-item" style="font-weight: bold;" href="{% url 'calving-record' %}">Calving</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" style="font-weight: bold;" href="{% url 'calf' %}">Calf Registration</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" style="font-weight: bold;" href="{% url 'new_animal' %}">Register new animal</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" style="font-weight: bold;" href="{% url 'livestock' %}">Livestock Inventory Form</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" style="font-weight: bold;" href="{% url 'culling' %}">Culling</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" style="font-weight: bold;" href="{% url 'dead_animal' %}">Dead Animal Registration </a>
+                          </a>
+                        <li/> 
+                      </ul>
+                  </li>
+                  <li class="sidebar-dropdown">
+                    <a href="#" style="font-weight: bold;">
+                      <span >Sheep Production</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        <li>
+                          <a class="dropdown-item" style="font-weight: bold;" href="">Sheep Production</a>
+                        </li>
+                        
+                      </ul>
+                  </li>
+                  <li class="sidebar-dropdown">
+                    <a href="#" style="font-weight: bold;">
+                      <span >Goat Production</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        <li>
+                          <a class="dropdown-item" style="font-weight: bold;" href="">Goat Production</a>
+                        </li>
+                        
+                      </ul>
+                  </li>
+                  <li class="sidebar-dropdown">
+                    <a href="#" style="font-weight: bold;">
+                      <span >Poultry Production</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        <li>
+                          <a class="dropdown-item" style="font-weight: bold;" href="">Layers</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" style="font-weight: bold;" href="">Broilers</a>
+                        </li>
+                        
+                      </ul>
+                  </li>
+                  <li class="sidebar-dropdown">
+                    <a href="#" style="font-weight: bold;">
+                      <span >Companion Animals</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        <li>
+                          <a class="dropdown-item" style="font-weight: bold;" href="">Dogs</a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" style="font-weight: bold;" href="">Cats</a>
+                        </li>
+                        
+                      </ul>
+                  </li>
+                  <li class="sidebar-dropdown">
+                    <a href="#"  style="font-weight: bold;">
+                     
+                      <span>Veterinary Records</span>
+                     
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                       
+                        <li class="sidebar-dropdown">
+                          <a href="#" style="font-weight: bold;">
+                             
+                              <span >Ambulatory Services</span>
+                          </a>
+                          <div class="sidebar-submenu">
+                              <ul>
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'ai-view'%}">AI Records </a>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'deworming-view'%}">Deworming Records</a>
+                                  </a>
+                                </li>
+                                
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'consultation-view'%}">Farm Consultation Records</a>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'postmortem-view'%}">Post Mortem Records</a>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'pregnancy-view'%}">Pregnancy Diagnosis Record</a>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'referral-view'%}">Referral Records</a>
+                                  </a>
+                                </li>
+                    
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'surgery-view'%}">Surgery Records</a>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'clinical-view'%}">Clinical Records</a>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'vaccination-view'%}">Vaccination Records</a>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'assesment-view'%}">Livestock Examination</a>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'ui-irrigation-view'%}">Uterine Irrigation</a>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'emergency-care-view'%}">Emergency Care</a>
+                                  </a>
+                                </li>
+                              </ul>
+                          </div>
+                      </li> 
+                        
+                        <li class="sidebar-dropdown">
+                          <a href="#" style="font-weight: bold;">
+                             
+                              <span >Laboratory Serivces</span>
+                          </a>
+                          <div class="sidebar-submenu">
+                              <ul>
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'collection-view'%}">Sample Collection</a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" style="font-weight: bold;" href="{% url 'processing-view'%}">Sample Processing</a>
+                                </li>
+                              </ul>
+                          </div>
+                      </li> 
+                        
+                        <li class="sidebar-dropdown">
+                          <a href="#" style="font-weight: bold;">
+                              
+                              <span >Veterinary Bills</span>
+                          </a>
+                          <div class="sidebar-submenu">
+                              <ul>
+                                 <li>
+                                  <a style="font-weight: bold;" href="{% url 'field_quotation_view'%}">Field Quotation</a>
+                                </li>
+                                <li>
+                                  <a style="font-weight: bold;" href="{% url 'invoiceview'%}">Invoice</a>
+                                </li>
+                                <li>
+                                  <a style="font-weight: bold;" href="{% url 'vet-billing-view'%}">Receipt</a>
+                                </li>
+                              </ul>
+                          </div>
+                      </li> 
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+                
+
+                {% comment %} <ul>
+                  <li class="sidebar-dropdown">
+                    <a href="#" style="font-weight: bold;">
+                      <span >Goat Production</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        
+                      </ul>
+                  </li>
+                </ul>
+                <ul>
+                  <li class="sidebar-dropdown">
+                    <a href="#" style="font-weight: bold;">
+                      <span >Poultry Production</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        
+                      </ul>
+                  </li>
+                </ul> {% endcomment %}
+               
+                  <li class="sidebar-dropdown">
+                    <a href="#" style="font-weight: bold;">
+                      <span >Employees Records</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                        <li>
+                          <a class="dropdown-item" style="font-weight: bold;"  href="">Employees</a>
+                        </li>
+                      </ul>
+                  </li>
+              
+
+            </div>
+            
+          </li>
+
+
+          
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-list"></i>
+              <span>Practitioners List</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="{% url 'vet-list' %}">All Vets</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          
+         
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-graduation-cap"></i>
+              <span>Telemedicine Services</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a style="font-weight: bold;" href="{% url 'client-request' %}">Vet Request </a>
+                </li>
+                
+                <li>
+                  <a style="font-weight: bold;" href="{% url 'vet_judgment_view' %}">Vet Judgements</a>
+                </li>
+                
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-list"></i>
+              <span>Dairy Cooperative Services</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="">Registration Details</a>
+                </li>
+                <li>
+                  <a href="">Daily Milk Supply</a>
+                </li>
+                <li>
+                  <a href="">Current Milk Price</a>
+                </li>
+                
+                <li>
+                  <a href="">Input Supplies</a>
+                </li>
+                <li>
+                  <a href="">Check in off deduction</a>
+                </li>
+                <li>
+                  <a href="">Payments(Gross pay deduction)</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-link"></i>
+              <span>Learning Resources</span>
+            </a>
+            <div class="sidebar-submenu">
+            <ul>
+              <li class="sidebar-dropdown">
+                <a href="#" style="font-weight: bold;">
+                  
+                  <span >Quick Links</span>
+                  
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a style="font-weight: bold;" href="https://agritech.tnau.ac.in/expert_system/cattlebuffalo/Calf%20management.html">Calf Management Experts</a>
+                    </li>
+                    <li>
+                      <a style="font-weight: bold;" href="https://agritech.tnau.ac.in/animal_husbandry/animhus_cattle_care&management.html">Animal Husbandry Experst</a>
+                    </li>
+                     <li>
+                      <a style="font-weight: bold;" href="https://mkulimatoday.com/">Mkulima Today</a>
+                    </li>
+                    <li>
+                      <a style="font-weight: bold;" href="https://practicaldairytrainingcentre.com/#:~:text=Dairy%20Management%20Course,and%20more">Practical Dairy</a>
+                    </li>
+                    
+                    <li>
+                      <a style="font-weight: bold;" href="https://www.infonet-biovision.org/">Infonet Biovision</a>
+                    </li>  
+
+                   
+                  </ul>
+                  
+              </li>
+            
+
+              <ul>
+                <li>
+                  <a style="font-weight: bold;" href="#">Videos And Tutorials </a>
+                </li>
+                <li>
+                  <a style="font-weight: bold;" href="{% url 'notes' %}">PDF NOTES</a>
+                </li>
+                 <li>
+                  <a style="font-weight: bold;" href="{% url 'quiz' %}">Test Your Knowledge</a>
+                </li>
+                
+              </ul>
+            </div>
+          </li>
+
+         
+          
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fas fa-balance-scale"></i>
+              <span>Slaughterhouse Management</span>
+            </a>
+            <div class="sidebar-submenu">
+            
+
+              <ul>
+                <li>
+                  <a style="font-weight: bold;" href="{% url 'slaughterhouse' %}">Register Slaughterhouse </a>
+                </li>
+
+                <li>
+                  <a style="font-weight: bold;" href="{% url 'butcher' %}">Butchers Details</a>
+                </li>
+                <li>
+                  <a style="font-weight: bold;" href="{% url 'daily-kills-view' %}">Daily Kills</a>
+                </li> 
+                <li>
+                  <a class="dropdown-item" style="font-weight: bold;"  href="{%url 'employee'%}">Employees</a>
+                </li>
+                <li>
+                  <a style="font-weight: bold;" href="{% url 'hides-skins-record' %}">Hides & Skins Records</a>
+                </li>
+                
+              </ul>
+
+              <ul>
+                <li class="sidebar-dropdown">
+                  <a href="#" style="font-weight: bold;">
+                    
+                    <span >Slaughterhouse Hygiene</span>
+                    
+                  </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                      <li>
+                        <a style="font-weight: bold;" href="{%url 'slaughterhouse-hygiene-page' %}">Slaughterhouse Hygiene</a>
+                      </li>
+                      
+                      
+                    </ul>
+                </li>
+                <ul>
+                  <li class="sidebar-dropdown">
+                    <a href="#" style="font-weight: bold;">
+                      <span >Management Records</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                      <ul>
+                       
+                        <li>
+                          <a style="font-weight: bold;" href="{% url 'management-committee' %}">Management Commitees</a>
+                        </li>
+                      </ul>
+                  </li>
+                  <li>
+                    <a style="font-weight: bold;" href="{% url 'slaughterhouse-assets-page' %}">Slaughterhouse Assets</a>
+                  </li>
+            </div>
+            
+          </li>
+
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-clipboard"></i>
+              <span>Financial Records</span>
+             
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+               
+                <li class="sidebar-dropdown">
+                  <a href="#" style="font-weight: bold;">
+                      <i class=""></i>
+                      <span >Source Of Income</span>
+                  </a>
+                  <div class="sidebar-submenu">
+                      <ul>
+                        <li class="sidebar-dropdown">
+                          <a href="#" style="font-weight: bold;">
+                              
+                              <span >Milk Sales</span>
+                          </a>
+                          <div class="sidebar-submenu">
+                            <ul>
+                        <li>
+                          <a style="font-weight: bold;" class="dropdown-item" href="{% url 'buyer' %}">Register Buyer</a>
+                        </li>
+                        <li>
+                          <a style="font-weight: bold;" href="{%url 'sales_of_milk'%}">Milk Supply</a>
+                        </li>
+                        <li>
+                          <a style="font-weight: bold;" class="dropdown-item" href="{% url 'payments' %}">Payments</a>
+                        </li>
+                      </ul>
+                    </div>
+
+                        <li>
+                          <a style="font-weight: bold;" class="dropdown-item" href="{% url 'animal_sales' %}">Sales Of Stock</a>
+                        </li>
+                        
+                      </ul>
+                  </div>
+              </li> 
+                
+                
+                
+                <li class="sidebar-dropdown">
+                  <a href="#" style="font-weight: bold;">
+                      <i class=""></i>
+                      <span >Expenses</span>
+                  </a>
+                  <div class="sidebar-submenu">
+                      <ul>
+                        <li>
+                          <a style="font-weight: bold;" href="{%url 'bills'%}">Veterinary Bills</a>
+                        </li>
+                        <li>
+                          <a style="font-weight: bold;" href="{%url 'archaricides'%}">Acaricides</a>
+                        </li>
+                        <li>
+                          <a  style="font-weight: bold;" href="{%url 'hygiene'%}">Dairy Hygiene</a>
+                        </li>
+                        <li>
+                          <a style="font-weight: bold;" href="{%url 'salaries'%}">Salaries</a>
+                        </li>
+                        <li>
+                          <a style="font-weight: bold;" href="{%url 'feeds'%}">Dairy Feeds</a>
+                        </li>
+                       
+                        <li>
+                          <a style="font-weight: bold;" href="{%url 'dairy_equipment'%}">Dairy Equipment</a>
+                        </li>
+                        <li>
+                          <a style="font-weight: bold;" href="{%url 'drugs'%}">Veterinary Drugs</a>
+                        </li>
+                        <li>
+                          <a style="font-weight: bold;" href="{%url 'minerals'%}">Livestock Minerals</a>
+                        </li>
+                        <li>
+                          <a style="font-weight: bold;" href="{%url 'insurance'%}">Livestock Insurance</a>
+                        </li>
+                        <li>
+                          <a style="font-weight: bold;" href="{%url 'other-expenses-view'%}">Other Expenses</a>
+                        </li>
+                      </ul>
+                  </div>
+              </li> 
+              </ul>
+            </div>
+          </li>
+
+        
+          <li class="">
+            <a href="{%url 'logout'%}">
+              <i class="fa fa-power-off" style="font-size:28px;color:red"></i>
+
+              <span>Logout</span>
+            </a>
+          </li>
+      </div>
+      <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+    <div class="sidebar-footer">
+    
+  </nav>
+  <!-- sidebar-wrapper  -->
+  

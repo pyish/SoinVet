@@ -1,0 +1,261 @@
+{% extends 'vet/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Begin Page Content -->
+      <div class="container-fluid" style="max-width: 600px; margin-top: 5px; margin-bottom: 150px;">
+          <div class="card o-hidden border-0 shadow-lg my-4">
+          <div class="card-body p-0" >
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Dairy Cooperative Create Account</h1>
+                  </div>
+                  <form class="user" method="POST">
+                    {% csrf_token %}
+                    {% for non_field_error in form.non_field_errors %}
+                      <p class="alert-danger">{{ non_field_error }}</p>
+                    {% endfor %}
+
+                   {% for field in form %}
+                      {% if field.errors %}
+                        {% for error in field.errors %}
+                          <div class="alert alert-danger" role="alert">
+                            <p>{{error}}</p>
+                          </div>
+                        {% endfor %}
+                      {% endif %}
+                   {% endfor %}
+                   
+                   {{form|crispy}}
+                   
+                   <button class="btn btn-primary w-100" type="button" id="openPolicyBtn1">
+                    CREATE ACCOUNT
+                </button>
+                  </form>
+                  <div class="border-bottom pt-3">
+                    <small class="text-muted">Already Have an account? <a href="{% url 'cooperative-login' %}">Login</a></small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+      </div>
+</div>
+<!-- Privacy Policy Modal -->
+<div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="privacyModalLabel">Terms of Service & Privacy Policy</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body" id="policyBody" style="max-height: 400px; overflow-y: auto;">
+
+        <h3 class="fw-bold">Terms of Service & Privacy Policy</h3>
+        <p><strong>Version 1.0 – Effective from December 2025</strong></p>
+    
+        <h5 class="mt-4 fw-bold">1. Introduction</h5>
+        <p>
+            The Soin Veterinary Web Application (“the Platform”) is owned and managed by
+            Soin Veterinary Services. It is a digital ecosystem designed to connect veterinary
+            professionals, farmers, dairy cooperatives, and veterinary pharmaceutical suppliers.
+        </p>
+        <p>
+            By creating an account or using our services, you (“User”) agree to these Terms
+            of Service and our Privacy Policy. If you do not agree, please do not use the Platform.
+        </p>
+    
+        <h6 class="fw-bold">Our Mission</h6>
+        <ul>
+            <li>Promote professionalism in veterinary services.</li>
+            <li>Enable farmers to verify the authenticity of veterinary practitioners.</li>
+            <li>Strengthen traceability of services, products, and cooperatives.</li>
+            <li>Digitally transform livestock farming for transparency and growth.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">2. User Accounts & Roles</h5>
+    
+        <h6 class="fw-bold">a. Veterinary Officer Login</h6>
+        <ul>
+            <li>Only licensed veterinary surgeons or paraprofessionals may register.</li>
+            <li>Details provided are verified with the Kenya Veterinary Board (KVB).</li>
+            <li>Verified practitioner details are visible to farmers for transparency.</li>
+            <li>False credentials, misrepresentation, or expired licenses may lead to suspension.</li>
+        </ul>
+    
+        <h6 class="fw-bold">b. Farmer Login</h6>
+        <ul>
+            <li>Farmers can book services and verify practitioner authenticity.</li>
+            <li>Farmers must provide accurate information.</li>
+            <li>False reporting or misuse may lead to suspension.</li>
+        </ul>
+    
+        <h6 class="fw-bold">c. Dairy Cooperative Login</h6>
+        <ul>
+            <li>Cooperatives manage members, production, and interactions with vets.</li>
+            <li>Admins are responsible for accurate member and production records.</li>
+            <li>Fraudulent accounts may be suspended after investigation.</li>
+        </ul>
+    
+        <h6 class="fw-bold">d. Veterinary Pharmaceutical Login</h6>
+        <ul>
+            <li>Only legally registered suppliers may register.</li>
+            <li>All products must comply with PPB regulations.</li>
+            <li>Expired or counterfeit products are strictly prohibited.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">3. Information We Collect</h5>
+        <ul>
+            <li>Veterinary Officers: Name, KVB license, qualifications, location, contact details.</li>
+            <li>Farmers: Name, contact details, location, livestock records.</li>
+            <li>Cooperatives: Registration details, members, production records.</li>
+            <li>Pharmaceuticals: Business details, VMD registration, product catalogue.</li>
+            <li>Device information: IP address, browser type, login activity.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">4. Purpose of Data Use</h5>
+        <ul>
+            <li>Verification of practitioners with KVB.</li>
+            <li>Farmers’ ability to check vet authenticity.</li>
+            <li>Facilitating services between users.</li>
+            <li>Compliance with laws and regulations.</li>
+            <li>Improvement, analytics, and disease surveillance.</li>
+            <li>Research in anonymized, aggregated form.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">5. Data Sharing & Disclosure</h5>
+        <ul>
+            <li>Practitioner details shared with KVB.</li>
+            <li>Farmers may view practitioner profiles.</li>
+            <li>No personal data sold or rented.</li>
+            <li>Shared only when legally required.</li>
+            <li>Mobile payment integrations may receive limited data.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">6. Data Protection & Security</h5>
+        <ul>
+            <li>Data is encrypted in servers and protected via HTTPS.</li>
+            <li>Sensitive identifiers are encrypted.</li>
+            <li>Regular security audits are conducted.</li>
+            <li>Users notified within 72 hours in case of a breach.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">7. User Responsibilities & Conduct</h5>
+        <ul>
+            <li>No false or misleading information.</li>
+            <li>No impersonation or unauthorized access.</li>
+            <li>No malware, abuse, harassment, or discrimination.</li>
+            <li>Violations may result in account termination.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">8. Service Availability & Limitations</h5>
+        <ul>
+            <li>24/7 availability is not guaranteed.</li>
+            <li>Features may be released in phases.</li>
+            <li>Usage limits may apply to prevent overload.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">9. Intellectual Property</h5>
+        <ul>
+            <li>Platform contents belong to Soin Veterinary Services.</li>
+            <li>No copying, reselling, or reverse-engineering allowed.</li>
+            <li>User-generated content remains user property.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">10. Children’s Data</h5>
+        <ul>
+            <li>Platform intended for users aged 18 and above.</li>
+            <li>Accounts registered by minors may be terminated.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">11. Termination of Accounts</h5>
+        <ul>
+            <li>Accounts may be terminated for fraud, expired licenses, or misconduct.</li>
+            <li>Users may appeal within 30 days.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">12. Limitation of Liability</h5>
+        <ul>
+            <li>The platform only facilitates interactions.</li>
+            <li>Soin Veterinary is not liable for medical errors or product outcomes.</li>
+            <li>Users should independently verify service providers.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">13. Dispute Resolution</h5>
+        <ul>
+            <li>Handled under the Kenya Arbitration Act (1995), Nairobi.</li>
+            <li>Disputes must be raised within 12 months.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">14. Changes to Terms & Privacy Policy</h5>
+        <ul>
+            <li>Changes may be made periodically.</li>
+            <li>Users notified of significant updates.</li>
+            <li>Continued use means acceptance.</li>
+        </ul>
+    
+        <h5 class="mt-4 fw-bold">15. Contact Information</h5>
+        <p>
+            <strong>Soin Veterinary Services</strong><br>
+            Olchobosei Centre, Transmara East, Kenya<br>
+            +254 727 091 292<br>
+            richardkib4@gmail.com<br>
+            www.soinvet.com
+        </p>
+    
+    </div>
+    
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Decline</button>
+
+        <!-- Disabled until user scrolls -->
+        <button type="button" class="btn btn-primary" id="agreeBtn" disabled>
+            I Agree
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  
+      const openModalBtn = document.getElementById("openPolicyBtn1");
+      const policyModal = new bootstrap.Modal(document.getElementById("privacyModal"));
+      const agreeBtn = document.getElementById("agreeBtn");
+      const policyBody = document.getElementById("policyBody");
+      const form = document.querySelector("form");
+  
+      // 1. Open modal when submit button is clicked
+      openModalBtn.addEventListener("click", function () {
+          policyModal.show();
+      });
+  
+      // 2. Detect scrolling to bottom
+      policyBody.addEventListener("scroll", function () {
+          if (policyBody.scrollTop + policyBody.clientHeight >= policyBody.scrollHeight - 5) {
+              agreeBtn.disabled = false;
+          }
+      });
+  
+      // 3. On I Agree → submit real form
+      agreeBtn.addEventListener("click", function () {
+          form.submit();
+      });
+  
+  });
+  </script>
+  
+
+
+
+{% endblock %}

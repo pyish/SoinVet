@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  app:
+    build: ./
+    image: soin_vet:latest
+    volumes:
+      - ./:/soin
+    command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:80"
+    ports:
+      - 5001:80
+    env_file:
+      - .env
+    depends_on:
+      - postgres_soin_vet
+
+
+    restart: on-failure
+
+  postgres_soin_vet:e
+    container_name: postgres_soin_vet
+    image: postgres:14.2
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./volumes/_data/postgres:/var/lib/postgresql/data
+      - ./volumes/_postgres/scripts/create_db.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+
+networks:
+  default:

@@ -1,0 +1,196 @@
+{% load static %}
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+<style>
+  .sidebar-submenu a.dropdown-item {
+    font-weight: bold;   /* Make all dropdown links bold */
+}
+</style> 
+
+<div class="page-wrapper chiller-theme ">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+      <div class="sidebar-brand">
+        <a href="{% url 'cooperative-portal' %}">Dairy Cooperative</a>
+        <div id="close-sidebar">
+          <i class="fas fa-times fa-lg"></i>
+        </div>
+      </div>
+      <div class="sidebar-header">
+        <div class="user-pic">
+          <img class="img-responsive img-rounded" src="{% static 'portals/assets/img/user.png' %}"
+            alt="User picture">
+        </div>
+        <div class="user-info">
+          <span class="user-name">
+            <strong>{{request.user}}</strong>
+          </span>
+          <span class="user-role">Dairy Cooperative</span>
+          <span class="user-status">
+            <i class="fa fa-circle"></i>
+            <span>Online</span>
+          </span>
+        </div>
+      </div>
+      <!-- sidebar-header  -->
+      <!-- sidebar-search  -->
+      <div class="sidebar-menu">
+        <ul>
+            <li class="header-menu">
+                <span>Services</span>
+            </li>
+    
+            <!-- MILK COLLECTION -->
+            <li class="sidebar-dropdown">
+                <a href="#" style="font-weight: bold;">
+                    <i class="fa fa-folder-open"></i>
+                    <span>Milk Collection</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li>
+                  <a style="font-weight: bold;" href="{% url 'clerk'%}">Clerk Entry</a>
+                </li>
+                 <li>
+                  <a style="font-weight: bold;" href="{% url 'supplier' %}">Suppliers</a>
+                </li>
+                 <li>
+                  <a style="font-weight: bold;" href="{% url 'supply_cooler' %}">Milk Records</a>
+                </li>
+                    </ul>
+                </div>
+            </li>
+    
+            <!-- MILK SALES -->
+            <li class="sidebar-dropdown">
+                <a href="#" style="font-weight: bold;">
+                    <i class="fa fa-folder-open"></i>
+                    <span>Milk Sales</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li><a class="dropdown-item" href="">Register Buyer</a></li>
+                        <li><a class="dropdown-item" href="">Sales Agreement</a></li>
+                        <li><a class="dropdown-item" href="">Dispatch Records</a></li>
+                        <li><a class="dropdown-item" href="">Payment Status</a></li>
+                    </ul>
+                </div>
+            </li>
+    
+            <!-- VETERINARY SERVICES -->
+            <li class="sidebar-dropdown">
+                <a href="#" style="font-weight: bold;">
+                    <i class="fa fa-folder-open"></i>
+                    <span>Veterinary Services</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li><a class="dropdown-item" href="{%url 'ai_coop'%}">Artificial Insemination</a></li>
+                        <li><a class="dropdown-item" href="#">Vaccination</a></li>
+                        <li><a class="dropdown-item" href="#">Extension Services</a></li>
+                        <li><a class="dropdown-item" href="#">Deworming</a></li>
+                        <li><a class="dropdown-item" href="#">Pregnancy Diagnosis</a></li>
+                        <li><a class="dropdown-item" href="#">Treatment</a></li>
+                    </ul>
+                </div>
+            </li>
+    
+            <!-- MANAGEMENT -->
+            <li class="sidebar-dropdown">
+                <a href="#" style="font-weight: bold;">
+                    <i class="fa fa-folder-open"></i>
+                    <span>Management</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+    
+                        <!-- Financial Records -->
+                        <li class="sidebar-dropdown">
+                            <a href="#" style="font-weight: bold;">Financial Records</a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li><a class="dropdown-item" href="#">Source of Income</a></li>
+                                    <li><a class="dropdown-item" href="#">Expenses</a></li>
+                                    <li><a class="dropdown-item" href="#">Profit</a></li>
+                                    <li><a class="dropdown-item" href="#">Salary</a></li>
+                                    <li><a class="dropdown-item" href="#">Advance Payment</a></li>
+                                </ul>
+                            </div>
+                        </li>
+    
+                        <!-- Staff Management -->
+                        <li>
+                            <a class="dropdown-item" href="#">Staff Management</a>
+                        </li>
+    
+                        <!-- Inventory Management -->
+                        <li>
+                            <a class="dropdown-item" href="#">Inventory Management</a>
+                        </li>
+    
+                        <!-- Registration Records -->
+                        <li class="sidebar-dropdown">
+                            <a href="#" style="font-weight: bold;">Registration Records</a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li><a class="dropdown-item" href="{% url 'dairy_farmer_report_view'%}">Farmer Registration</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'milk_center_report_view'%}">Milk Collection</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="{% url 'milk_price_report_view'%}">Current milk Price</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">Milk Route Performance</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{%url 'milk_payment_report_view'%}">Farmers Milk Payments</a>
+                  </li>
+                  <li class="sidebar-dropdown">
+                    <a href="#" style="font-weight: bold;">Shareholding & Dividents</a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li><a class="dropdown-item" href="#">Shares</a></li>
+                            <li><a class="dropdown-item" href="#">Dividents</a></li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Milk Spoilage</a>
+              </li>
+
+                    </ul>
+                </div>
+            </li>
+    
+            <!-- LOGOUT -->
+            <li>
+                <a href="{%url 'logout'%}">
+                    <i class="fa fa-power-off" style="font-size:28px;color:red"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+      <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+    <div class="sidebar-footer">
+    
+  </nav>
+  <!-- sidebar-wrapper  -->
+  
+
